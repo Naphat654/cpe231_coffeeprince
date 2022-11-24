@@ -22,9 +22,9 @@
             {% for lineitem in data %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ lineitem.menu_code }}</td>
-                    <td>{{ lineitem.unit_price }}</td>
-                    <td>{{ lineitem.quantity }}</td>
+                    <td>{{ lineitem.menu_name }}</td>
+                    <td>{{ lineitem.total_price }}</td>
+                    <td>{{ lineitem.amount }}</td>
                     <td>{{ lineitem.total }}</td>
                 <tr>
             {% endfor %}

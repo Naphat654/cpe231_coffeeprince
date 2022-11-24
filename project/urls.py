@@ -28,6 +28,7 @@ urlpatterns = [
     path('', order_views.index, name='index'),
 
     path('report/report', report_views.report),
+    path('menu/list', order_views.MenuList.as_view(), name='menu_list'),
     path('customer/list', order_views.CustomerList.as_view(), name='customer_list'),
     path('customer/detail/<pk>', order_views.CustomerDetail.as_view(), name='customer_detail'),
     path('paymentmethod/list', order_views.PaymentMethodList.as_view(), name='payment_method_list'),
@@ -41,14 +42,17 @@ urlpatterns = [
     path('form', form_views.index, name='index'),
     path('customer', form_views.customer),
     path('form/Menu', form_views.menu),
-    path('form/Promotion', form_views.promotion),
-    path('form/Dependent', form_views.dependent),
     path('form/PaymentMethod', form_views.paymentmethod),
     
     path('customer/get', form_views.customer),
     path('customer/get/<customer_id>', form_views.CustomerGet.as_view(), name='customer_get'), 
     path('customer/save', form_views.CustomerSave.as_view(), name='customer_save'),   
     path('customer/save2', form_views.CustomerSave2.as_view(), name='customer_save2'), 
+    
+    path('menu/get', form_views.menu),
+    path('menu/get/<menu_code>', form_views.MenuGet.as_view(), name='menu_get'), 
+    path('menu/save', form_views.MenuSave.as_view(), name='menu_save'),   
+    path('menu/save2', form_views.MenuSave2.as_view(), name='menu_save2'), 
 
 
     path('paymentmethod1/list', form_views.PaymentMethodList.as_view(), name='payment_method_list'),

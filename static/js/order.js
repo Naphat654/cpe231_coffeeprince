@@ -62,28 +62,11 @@ $(document).ready( function () {
         });
     });
 
-    $('#txt_PromotionCode').change (function () {
-        var promotion_code = $(this).val().trim();
-
-        $.ajax({
-            url:  '/promotion/detail/' + promotion_code,
-            type:  'get',
-            dataType:  'json',
-            success: function  (data) {
-                $('#txt_PromotionCode').val(data.promotions.promotion_code);
-                $('#txt_Discount').val(data.promotions.discount);
-            },
-            error: function (xhr, status, error) {
-                $('#txt_Discount').val('');
-            }
-        });
-    });
-
     $('#txt_PaymentMethod').change (function () {
         var payment_method = $(this).val().trim();
 
         $.ajax({
-            url:  '/paymentmethod/detail/' + payment_method,
+            url:  '/payment_method/detail/' + payment_method,
             type:  'get',
             dataType:  'json',
             success: function  (data) {
@@ -96,22 +79,24 @@ $(document).ready( function () {
         });
     });
 
-    $('#txt_EmployeeID').change (function () {
-        var employee_id = $(this).val().trim();
+    $('#txt_Menu').change (function () {
+        var menu_id = $(this).val().trim();
 
         $.ajax({
-            url:  '/employee/detail/' + employee_id,
+            url:  '/menu/detail/' + menu_id,
             type:  'get',
             dataType:  'json',
             success: function  (data) {
-                $('#txt_EmployeeID').val(data.employees.employee_id);
-                $('#txt_EmployeeName').val(data.employees.name);
+                $('#txt_Menu').val(data.menu.menu_id);
+                $('#txt_MenuName').val(data.menu.menu_name);
             },
             error: function (xhr, status, error) {
-                $('#txt_EmployeeName').val('');
+                $('#txt_MenuName').val('');
             }
         });
     });
+
+
 // ================================================================================
    /* search type */
 $('.search_product_code').click(function () {
@@ -377,13 +362,13 @@ $('.search_product_code').click(function () {
 
     $('.search_payment_method').click(function () {
         $.ajax({
-            url:  '/paymentmethod/list',
+            url:  '/payment_method/list',
             type:  'get',
             dataType:  'json',
             success: function  (data) {
                 let rows =  '';
                 var i = 1;
-                data.payment_methods.forEach(payment_method => {
+                data.paymentmethods.forEach(payment_method => {
                     rows += `
                     <tr class="d-flex">
                         <td class='col-1'>${i++}</td>
@@ -472,8 +457,8 @@ $('.search_product_code').click(function () {
                 if ($(this).find('.order_no').html() == '*') {
                     $(this).find('.project_code_1 > span').html(code);
                     //$(this).find('.product_name').html(name);
-                    $(this).find('.unit_price').html(name);
-                    $(this).find('.quantity').html("1");
+                    $(this).find('.total_price').html(name);
+                    $(this).find('.amount').html("1");
                 }
             });
             
@@ -655,10 +640,10 @@ function lineitem_to_json () {
         if ($(this).find('.project_code_1 > span').html() != '') {
             rows[i] = {};
             rows[i]["item_no"] = (i+1);
-            rows[i]["menu_code"] = $(this).find('.project_code_1 > span').html();
-            rows[i]["unit_price"] = $(this).find('.unit_price').html();
-            rows[i]["quantity"] = $(this).find('.quantity').html();
-            rows[i]["product_total"] = $(this).find('.product_total').html();
+            rows[i]["menu_id"] = $(this).find('.project_code_1 > span').html();
+            rows[i]["total_price"] = $(this).find('.total_price').html();
+            rows[i]["amount"] = $(this).find('.amount').html();
+            rows[i]["total"] = $(this).find('.total').html();
             i++;
         }
     });
@@ -686,8 +671,8 @@ function get_order_detail (order_no) {
                 if (i < data.orderlineitem.length) {
                     $(this).find('.project_code_1 > span').html(data.orderlineitem[i].menu_code);
                     //$(this).find('.product_name').html(data.invoicelineitem[i].product_code__name);
-                    $(this).find('.unit_price').html(data.orderlineitem[i].unit_price);
-                    $(this).find('.quantity').html(data.orderlineitem[i].quantity);
+                    $(this).find('.total_price').html(data.orderlineitem[i].total_price);
+                    $(this).find('.amount').html(data.orderlineitem[i].amount);
                 }
                 i++;
             });
@@ -700,23 +685,23 @@ function re_calculate_total_price () {
     var total_price = 0;
     $("#table_main tbody tr").each(function() {
 
-        var menu_code = $(this).find('.project_code_1 > span').html();
+        var menu_id = $(this).find('.project_code_1 > span').html();
         //console.log (product_code);
-        var unit_price = $(this).find('.unit_price').html();
-        $(this).find('.unit_price').html(((unit_price)));
-        var quantity = $(this).find('.quantity').html();
-        $(this).find('.quantity').html(parseInt(quantity));
-        if (menu_code != '') {
-                var product_total = unit_price * quantity
-            $(this).find('.product_total').html(formatNumber(product_total));
-            total_price += product_total;
+        var total_price = $(this).find('.total_price').html();
+        $(this).find('.total_price').html(((total_price)));
+        var amount = $(this).find('.amount').html();
+        $(this).find('.amount').html(parseInt(amount));
+        if (menu_id != '') {
+                var total = total_price * amount
+            $(this).find('.total').html(formatNumber(total));
+            total_price += total;
         }
     });
     var discount = $('#txt_Discount').val();
     $('#lbl_TotalPrice').text(formatNumber(total_price));
     $('#txt_TotalPrice').val($('#lbl_TotalPrice').text());
-    $('#lbl_Rebate').text(formatNumber(total_price*discount));
-    $('#txt_Rebate').val($('#lbl_Rebate').text());
+    $('#lbl_Discount').text(formatNumber(total_price*discount));
+    $('#txt_Discount').val($('#lbl_Discount').text());
     $('#lbl_Remain').text(formatNumber(total_price*(1-discount)));
     $('#txt_Remain').val($('#lbl_Remain').text()); 
 }
@@ -736,11 +721,11 @@ function reset_form() {
     $('#txt_Discount').val('0.00');
     $('#txt_PaymentMethod').val('');
     $('#txt_Description').val('');
-    $('#txt_EmployeeID').val('');
-    $('#txt_EmployeeName').val('');
+    // $('#txt_EmployeeID').val('');
+    // $('#txt_EmployeeName').val('');
 
     $('#lbl_TotalPrice').text('0.00');
-    $('#lbl_Rebate').text('0.00');
+    $('#lbl_Discount').text('0.00');
     $('#lbl_Remain').text('0.00');
 }
 
@@ -749,6 +734,11 @@ function reset_table() {
     for(var i=1; i<= ROW_NUMBER; i++) {
         $('.table-add').click();
     }    
+}
+
+/* Add one row to table */
+function add_last_one_row () {
+    $('.table-add').click();                    // Call event click of button '+' in header of table, for add one row
 }
 
 function re_order_no () {

@@ -36,7 +36,7 @@ class CustomerList(View):
         return response
 
 class CustomerGet(View):
-    def get(self, request, customer_id):
+    def get(self, request, id_user):
         customers = list(Customer.objects.filter(id_user=id_user).values())
         data = dict()
         data['customers'] = customers
@@ -94,8 +94,8 @@ class CustomerSave2(View):
 
 # Create your views here.
 def menu(request):
-    menu_code = request.GET.get('menu_code','')
-    menus = list(Menu.objects.filter(menu_code = menu_code).values())
+    menu_id = request.GET.get('menu_id','')
+    menus = list(Menu.objects.filter(menu_id = menu_id).values())
     data = dict()
     data['menus'] = menus
     
@@ -111,8 +111,8 @@ class MenuList(View):
         return response
 
 class MenuGet(View):
-    def get(self, request, menu_code):
-        menus = list(Menu.objects.filter(menu_code = menu_code).values())
+    def get(self, request, menu_id):
+        menus = list(Menu.objects.filter(menu_id = menu_id).values())
         data = dict()
         data['menus'] = menus
         response = JsonResponse(data)

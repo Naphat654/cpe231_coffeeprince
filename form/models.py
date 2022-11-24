@@ -19,13 +19,13 @@ class Customer(models.Model):
         return self.id_user
 
 class Menu(models.Model):
-    menu_id = models.CharField(max_length=10, primary_key=True)
-    menu_name = models.CharField(max_length=100, null=True)
-    price = models.FloatField(null=True, blank=True)
-    amount_of_coffee = models.IntegerField(null=True)
-    amount_of_milk = models.IntegerField(null=True)
-    amount_of_chocolate = models.IntegerField(null=True)
-    amount_of_syrub = models.IntegerField(null=True)
+    menu_id = models.CharField(max_length=10,primary_key=True)
+    menu_name = models.CharField(max_length=20, null=True)
+    price = models.CharField(max_length=10, null=True)
+    amount_of_coffee = models.CharField(max_length=20, null=True)
+    amount_of_milk = models.CharField(max_length=20, null=True)
+    amount_of_chocolate = models.CharField(max_length=20, null=True)
+    amount_of_syrup = models.CharField(max_length=20, null=True)
     class Meta:
         db_table = "menu"
         managed = False

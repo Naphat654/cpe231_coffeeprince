@@ -112,13 +112,8 @@ $(document).ready( function () {
             }
         });
     });
-
-    
-    /* search product code  */
+    /* search menu code  */
     $('.search_menu_code').click(function () {
-        $p_code = $(this).parents('td').children('span').html();
-        $(this).parents('tr').find('.order_no').html('*');
-
         $.ajax({
             url:  '/menu/list',
             type:  'get',
@@ -126,12 +121,12 @@ $(document).ready( function () {
             success: function  (data) {
                 let rows =  '';
                 var i = 1;
-                data.menus.forEach(menu => {
+                data.menu_codes.forEach(menu_code => {
                     rows += `
                     <tr class="d-flex">
                         <td class='col-1'>${i++}</td>
                         <td class='col-3'><a class='a_click' href='#'>${menu.menu_code}</a></td>
-                        <td class='col-5'>${menu.unit_price}</td>
+                        <td class='col-5'>${menu.name}</td>
                         <td class='col-3'></td>
                         <td class='hide'></td>
                     </tr>`;
@@ -139,14 +134,83 @@ $(document).ready( function () {
                 $('#table_modal > tbody').html(rows);
 
                 $('#model_header_1').text('Menu Code');
-                $('#model_header_2').text('Unit Price');
+                $('#model_header_2').text('Menu Code');
                 $('#model_header_3').text('Note');
+
             },
-        });
+        });        
         // open popup
-        $('#txt_modal_param').val('menu_code');
+        $('#txt_modal_param').val('payment_method');
         $('#modal_form').modal();
     });
+// ================================================================================
+    /* search product code  */
+    // $('.search_menu_code').click(function () {
+    //     $p_code = $(this).parents('td').children('span').html();
+    //     $(this).parents('tr').find('.order_no').html('*');
+
+    //     $.ajax({
+    //         url:  '/menu/list',
+    //         type:  'get',
+    //         dataType:  'json',
+    //         success: function  (data) {
+    //             let rows =  '';
+    //             var i = 1;
+    //             data.menus.forEach(menu => {
+    //                 rows += `
+    //                 <tr class="d-flex">
+    //                     <td class='col-1'>${i++}</td>
+    //                     <td class='col-3'><a class='a_click' href='#'>${menu.menu_code}</a></td>
+    //                     <td class='col-5'>${menu.name}</td>
+    //                     <td class='col-3'></td>
+    //                     <td class='hide'></td>
+    //                 </tr>`;
+    //             });
+    //             $('#table_modal > tbody').html(rows);
+
+    //             $('#model_header_1').text('Menu Code');
+    //             $('#model_header_2').text('Menu Name');
+    //             $('#model_header_3').text('Note');
+    //         },
+    //     });
+    //     // open popup
+    //     $('#txt_modal_param').val('menu_code');
+    //     $('#modal_form').modal();
+    // });
+
+    /* search type */
+    $('.search_type').click(function () {
+        $.ajax({
+            url:  '/type/list',
+            type:  'get',
+            dataType:  'json',
+            success: function  (data) {
+                let rows =  '';
+                var i = 1;
+                data.customers.forEach(customer => {
+                    rows += `
+                    <tr class="d-flex">
+                        <td class='col-1'>${i++}</td>
+                        <td class='col-3'><a class='a_click' href='#'>${customer.customer_id}</a></td>
+                        <td class='col-5'></td>
+                        <td class='col-3'></td>
+                        <td class='hide'></td>
+                    </tr>`;
+                });
+                $('#table_modal > tbody').html(rows);
+
+                $('#model_header_1').text('Customer ID');
+                $('#model_header_2').text('Customer Name');
+                $('#model_header_3').text('Note');
+
+            },
+        });        
+        // open popup
+        $('#txt_modal_param').val('customer_id');
+        $('#modal_form').modal();
+    });
+
+
 
     $('.search_customer_id').click(function () {
         $.ajax({
@@ -326,6 +390,9 @@ $(document).ready( function () {
         } else if ($('#txt_modal_param').val() == 'employee_id') {
             $('#txt_EmployeeID').val(code);
             $('#txt_EmployeeName').val(name);
+        // } else if ($('#txt_modal_param').val() == 'menu_code') {
+        //     $('#txt_MenuCode').val(code);
+        //     $('#txt_EmployeeName').val(name);
         } else if ($('#txt_modal_param').val() == 'order_no') {
             $('#txt_OrderNo').val(code);
             $('#txt_OrderDate').val(name);

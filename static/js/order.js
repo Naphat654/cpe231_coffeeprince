@@ -234,7 +234,7 @@ $('.search_product_code').click(function () {
 
                 $('#model_header_1').text('Menu Code');
                 $('#model_header_2').text('Menu Name');
-                $('#model_header_3').text('Note');
+                // $('#model_header_3').text('Note');
 
             },
         });        

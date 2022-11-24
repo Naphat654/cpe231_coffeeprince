@@ -112,7 +112,7 @@ class StockList(View):
 
 class StockGet(View):
     def get(self, request, id_stock):
-        stocks = list(Stock.objects.filter(id_stock = id_stock).values())
+        stocks = list(Stock.objects.filter(id_stock=id_stock).values())
         data = dict()
         data['stocks'] = stocks
         response = JsonResponse(data)

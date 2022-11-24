@@ -1,4 +1,4 @@
-{% extends 'form/base_form.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     
@@ -10,13 +10,13 @@
 
     <button id='btnStockList'class="btn btn-dark ">Stock List</button>
 
-    <form id='form_stcok' action='/stock/save' method=POST>
+    <form id='form_stock' action='/stock/save' method=POST>
         {% csrf_token %}
         <table id='StockList' class="table">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Stcok ID</th>
+                    <th>Stock ID</th>
                     <th>Stock Date</th>
                     <th>Stock Name</th>
                     <th>Amount</th>
@@ -76,11 +76,11 @@
                             <td class='col-1'>${i++}</td>
                             <td class='col-2'>${stock.id_stock}</td>
                             <td class='col-3'>${stock.date_stock}</td>
-                            <td class='col-3'>${stock.stock_name}</td>
-                            <td class='col-3'>${stock.amount}</td>
-                            <td class='col-3'>${stock.cost}</td>
-                            <td class='col-3'>${stock.total_amount}</td>
-                            <td class='col-3'>${stock.total_price}</td>
+                            <td class='col-4'>${stock.stock_name}</td>
+                            <td class='col-5'>${stock.amount}</td>
+                            <td class='col-6'>${stock.cost}</td>
+                            <td class='col-7'>${stock.total_amount}</td>
+                            <td class='col-8'>${stock.total_price}</td>
                             <td class='hide'></td>
                         </tr>`;
                     });
@@ -107,11 +107,11 @@
                             <td class='col-1'>${i++}</td>
                             <td class='col-2'>${stock.id_stock}</td>
                             <td class='col-3'>${stock.date_stock}</td>
-                            <td class='col-3'>${stock.stock_name}</td>
-                            <td class='col-3'>${stock.amount}</td>
-                            <td class='col-3'>${stock.cost}</td>
-                            <td class='col-3'>${stock.total_amount}</td>
-                            <td class='col-3'>${stock.total_price}</td>
+                            <td class='col-4'>${stock.stock_name}</td>
+                            <td class='col-5'>${stock.amount}</td>
+                            <td class='col-6'>${stock.cost}</td>
+                            <td class='col-7'>${stock.total_amount}</td>
+                            <td class='col-8'>${stock.total_price}</td>
                             <td class='hide'></td>
                         </tr>`;
                     });

@@ -83,12 +83,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'CPE231_Project',
         'USER': 'postgres',
-<<<<<<< HEAD
-        'PASSWORD': '220125',
-=======
+        # 'PASSWORD': '220125',
+
         # 'PASSWORD': '7222',
         'PASSWORD': 'nut3044',
->>>>>>> f30771f738bd70150db27cf9ddeb96bb788b2fad
+
         'HOST': 'localhost',
         'PORT': '',
     }

@@ -156,7 +156,7 @@ $('.search_product_code').click(function () {
             success: function  (data) {
                 let rows =  '';
                 var i = 1;
-                data.additional_items.forEach(additional_item => {
+                data.additional_items.forEach(additional_items => {
                     rows += `
                     <tr class="d-flex">
                         <td class='col-1'>${i++}</td>
@@ -168,14 +168,14 @@ $('.search_product_code').click(function () {
                 });
                 $('#table_modal > tbody').html(rows);
 
-                $('#model_header_1').text('Customer ID');
-                $('#model_header_2').text('Customer Name');
+                $('#model_header_1').text('Type');
+                $('#model_header_2').text('Description');
                 $('#model_header_3').text('Note');
 
             },
         });        
         // open popup
-        $('#txt_modal_param').val('additional_items');
+        $('#txt_modal_param').val('type');
         $('#modal_form').modal();
     });
 
@@ -220,7 +220,7 @@ $('.search_product_code').click(function () {
             success: function  (data) {
                 let rows =  '';
                 var i = 1;
-                data.menu_codes.forEach(menu_code => {
+                data.menus.forEach(menu => {
                     rows += `
                     <tr class="d-flex">
                         <td class='col-1'>${i++}</td>

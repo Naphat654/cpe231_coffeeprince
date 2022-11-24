@@ -29,6 +29,7 @@ urlpatterns = [
 
     path('report/report', report_views.report),
     path('menu/list', order_views.MenuList.as_view(), name='menu_list'),
+    path('stock/list', order_views.StockList.as_view(), name='stock_list'),
     path('customer/list', order_views.CustomerList.as_view(), name='customer_list'),
     path('customer/detail/<pk>', order_views.CustomerDetail.as_view(), name='customer_detail'),
     path('paymentmethod/list', order_views.PaymentMethodList.as_view(), name='payment_method_list'),
@@ -39,12 +40,13 @@ urlpatterns = [
     path('home', home_views.index, name='index'),
     path('Home', home_views.Home),
     path('RecommendedMenu', home_views.recommended_menu),
-    path('Promotion', home_views.promotion),
+    path('Stock', home_views.stock),
 
     path('form', form_views.index, name='index'),
     path('customer', form_views.customer),
     path('form/Menu', form_views.menu),
     path('form/PaymentMethod', form_views.paymentmethod),
+    path('from/Stock', form_views.stock),
     
     path('customer/get', form_views.customer),
     path('customer/get/<customer_id>', form_views.CustomerGet.as_view(), name='customer_get'), 
@@ -56,6 +58,10 @@ urlpatterns = [
     path('menu/save', form_views.MenuSave.as_view(), name='menu_save'),   
     path('menu/save2', form_views.MenuSave2.as_view(), name='menu_save2'), 
 
+    path('stock/get', form_views.stock),
+    path('stock/get/<id_stock>', form_views.StockGet.as_view(), name='stock_get'), 
+    path('stock/save', form_views.StockSave.as_view(), name='stock_save'),   
+    path('stock/save2', form_views.StockSave2.as_view(), name='stock_save2'), 
 
     path('paymentmethod1/list', form_views.PaymentMethodList.as_view(), name='payment_method_list'),
     path('paymentmethod/get', form_views.paymentmethod),

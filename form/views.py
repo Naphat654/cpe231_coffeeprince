@@ -19,8 +19,8 @@ def index(request):
 
 # Create your views here.
 def customer(request):
-    customer_id = request.GET.get('customer_id','')
-    customers = list(Customer.objects.filter(customer_id=customer_id).values())
+    id_user = request.GET.get('id_user','')
+    customers = list(Customer.objects.filter(id_user=id_user).values())
     data = dict()
     data['customers'] = customers
     

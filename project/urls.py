@@ -39,7 +39,7 @@ urlpatterns = [
     path('Promotion', home_views.promotion),
 
     path('form', form_views.index, name='index'),
-    path('form/Customer', form_views.customer),
+    path('customer', form_views.customer),
     path('form/Menu', form_views.menu),
     path('form/Promotion', form_views.promotion),
     path('form/Dependent', form_views.dependent),
@@ -57,8 +57,4 @@ urlpatterns = [
     path('paymentmethod/save', form_views.PaymentMethodSave.as_view(), name='payment_method_save'),   
     path('paymentmethod/save2', form_views.PaymentMethodSave2.as_view(), name='payment_method_save2'),
     
-    path('login/', login_views.loginPage, name='login'),
-    path('logout/', login_views.logoutUser, name='logout'),
-    path('register/', login_views.registerPage, name='register'),
-
 ]

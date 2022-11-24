@@ -45,7 +45,7 @@ $(document).ready( function () {
         re_calculate_total_price();
     });
 
-    $('#txt_CustomerID').change (function () {
+    $('#txt_IdUser').change (function () {
         var id_user = $(this).val().trim();
 
         $.ajax({
@@ -53,8 +53,8 @@ $(document).ready( function () {
             type:  'get',
             dataType:  'json',
             success: function  (data) {
-                $('#txt_CustomerID').val(data.customers.id_user);
-                $('#txt_CustomerName').val(data.customers.username);
+                $('#txt_IdUser').val(data.customers.id_user);
+                $('#txt_Username').val(data.customers.username);
             },
             error: function (xhr, status, error) {
                 $('#txt_Username').val('');

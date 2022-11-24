@@ -34,6 +34,10 @@ urlpatterns = [
     path('customer/detail/<pk>', order_views.CustomerDetail.as_view(), name='customer_detail'),
     path('paymentmethod/list', order_views.PaymentMethodList.as_view(), name='payment_method_list'),
     path('paymentmethod/detail/<pk>', order_views.PaymentMethodDetail.as_view(), name='payment_method_detail'),
+    path('sweet/list', order_views.SweetList.as_view(), name='payment_method_list'),
+    path('sweet/detail/<pk>', order_views.SweetDetail.as_view(), name='payment_method_detail'),
+    path('additional_items/list', order_views.AdditionalItemsList.as_view(), name='payment_method_list'),
+    path('additional_items/detail/<pk>', order_views.AdditionalItemsDetail.as_view(), name='payment_method_detail'),
     
     path('home', home_views.index, name='index'),
     path('Home', home_views.Home),
@@ -43,6 +47,7 @@ urlpatterns = [
     path('form', form_views.index, name='index'),
     path('customer', form_views.customer),
     path('form/Menu', form_views.menu),
+    path('form/Stock', form_views.stock),
     path('form/PaymentMethod', form_views.paymentmethod),
     path('from/Stock', form_views.stock),
     

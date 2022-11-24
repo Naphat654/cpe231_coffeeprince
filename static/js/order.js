@@ -212,7 +212,7 @@ $('.search_product_code').click(function () {
     });
 
         /* search menu code  */
-    $('.search_menu_code').click(function () {
+    $('.search_menu_id').click(function () {
         $.ajax({
             url:  '/menu/list',
             type:  'get',
@@ -312,7 +312,7 @@ $('.search_product_code').click(function () {
 
 
 
-    $('.search_customer_id').click(function () {
+    $('.search_id_user').click(function () {
         $.ajax({
             url:  '/customer/list',
             type:  'get',
@@ -470,7 +470,7 @@ $('.search_product_code').click(function () {
         if ($('#txt_modal_param').val() == 'menu_code') {
             $("#table_main tbody tr").each(function() {
                 if ($(this).find('.order_no').html() == '*') {
-                    $(this).find('.project_code_1 > span').html(code);
+                    $(this).find('.menu_code_1 > span').html(code);
                     //$(this).find('.product_name').html(name);
                     $(this).find('.unit_price').html(name);
                     $(this).find('.quantity').html("1");
@@ -652,10 +652,10 @@ function lineitem_to_json () {
     var rows = [];
     var i = 0;
     $("#table_main tbody tr").each(function(index) {
-        if ($(this).find('.project_code_1 > span').html() != '') {
+        if ($(this).find('.menu_code_1 > span').html() != '') {
             rows[i] = {};
             rows[i]["item_no"] = (i+1);
-            rows[i]["menu_code"] = $(this).find('.project_code_1 > span').html();
+            rows[i]["menu_code"] = $(this).find('.menu_code_1 > span').html();
             rows[i]["unit_price"] = $(this).find('.unit_price').html();
             rows[i]["quantity"] = $(this).find('.quantity').html();
             rows[i]["product_total"] = $(this).find('.product_total').html();
@@ -671,22 +671,22 @@ function lineitem_to_json () {
 
 function get_order_detail (order_no) {
     $.ajax({
-        url:  '/order/detail/' + encodeURIComponent(order_no),
+        url:  'customer/detail/' + encodeURIComponent(order_no),
         type:  'get',
         dataType:  'json',
         success: function  (data) {
             //console.log(data.invoicelineitem.length);
 
             reset_table();
-            for(var i=ROW_NUMBER;i<data.orderlineitem.length;i++) {
+            for(var i=ROW_NUMBER;i<data.menu.length;i++) {
                 $('.table-add').click();
             }
             var i = 0;
             $("#table_main tbody tr").each(function() {
                 if (i < data.orderlineitem.length) {
-                    $(this).find('.project_code_1 > span').html(data.orderlineitem[i].menu_code);
-                    //$(this).find('.product_name').html(data.invoicelineitem[i].product_code__name);
-                    $(this).find('.unit_price').html(data.orderlineitem[i].unit_price);
+                    $(this).find('.menu_code_1 > span').html(data.menu[i].menu_id);
+                    $(this).find('.name').html(data.menu[i].menu_name);
+                    $(this).find('.unit_price').html(data.menu[i].price);
                     $(this).find('.quantity').html(data.orderlineitem[i].quantity);
                 }
                 i++;
@@ -700,13 +700,13 @@ function re_calculate_total_price () {
     var total_price = 0;
     $("#table_main tbody tr").each(function() {
 
-        var menu_code = $(this).find('.project_code_1 > span').html();
+        var menu_id = $(this).find('.menu_code_1 > span').html();
         //console.log (product_code);
         var unit_price = $(this).find('.unit_price').html();
         $(this).find('.unit_price').html(((unit_price)));
         var quantity = $(this).find('.quantity').html();
         $(this).find('.quantity').html(parseInt(quantity));
-        if (menu_code != '') {
+        if (menu_id != '') {
                 var product_total = unit_price * quantity
             $(this).find('.product_total').html(formatNumber(product_total));
             total_price += product_total;

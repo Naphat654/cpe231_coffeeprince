@@ -95,7 +95,7 @@ class CustomerSave2(View):
 # Create your views here.
 def stock(request):
     id_stock = request.GET.get('id_stock','')
-    stocks = list(Stock.objects.filter(id_stock = id_stock).values())
+    stocks = list(Stock.objects.filter(id_stock=id_stock).values())
     data = dict()
     data['stocks'] = stocks
     

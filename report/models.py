@@ -41,3 +41,17 @@ class PaymentMethod(models.Model):
     def __str__(self):
         return self.payment_method 
 
+class Stock(models.Model):
+    id_stock = models.CharField(max_length=10, primary_key=True)
+    date_stock = models.DateField(null=True)
+    stock_name = models.CharField(max_length=100 ,null=True)
+    amount = models.IntegerField(null=True)
+    cost = models.FloatField(null=True, blank=True)
+    total_amount = models.IntegerField(null=True)
+    total_price = models.FloatField(null=True, blank=True)
+    class Meta:
+        db_table = "stock"
+        managed = False
+    def __str__(self):
+        return self.id_stock
+

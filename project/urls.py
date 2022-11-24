@@ -45,7 +45,6 @@ urlpatterns = [
     path('form/Menu', form_views.menu),
     path('form/Stock', form_views.stock),
     path('form/PaymentMethod', form_views.paymentmethod),
-    path('from/Stock', form_views.stock),
     
     path('customer/get', form_views.customer),
     path('customer/get/<customer_id>', form_views.CustomerGet.as_view(), name='customer_get'), 

@@ -33,6 +33,8 @@ urlpatterns = [
     path('customer/detail/<pk>', order_views.CustomerDetail.as_view(), name='customer_detail'),
     path('paymentmethod/list', order_views.PaymentMethodList.as_view(), name='payment_method_list'),
     path('paymentmethod/detail/<pk>', order_views.PaymentMethodDetail.as_view(), name='payment_method_detail'),
+    path('sweet/list', order_views.SweetList.as_view(), name='payment_method_list'),
+    path('sweet/detail/<pk>', order_views.SweetDetail.as_view(), name='payment_method_detail'),
     
     path('home', home_views.index, name='index'),
     path('Home', home_views.Home),

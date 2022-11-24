@@ -66,7 +66,7 @@ $(document).ready( function () {
         var payment_method = $(this).val().trim();
 
         $.ajax({
-            url:  '/payment_method/detail/' + payment_method,
+            url:  '/paymentmethod/detail/' + payment_method,
             type:  'get',
             dataType:  'json',
             success: function  (data) {
@@ -362,13 +362,13 @@ $('.search_product_code').click(function () {
 
     $('.search_payment_method').click(function () {
         $.ajax({
-            url:  '/payment_method/list',
+            url:  '/paymentmethod/list',
             type:  'get',
             dataType:  'json',
             success: function  (data) {
                 let rows =  '';
                 var i = 1;
-                data.paymentmethods.forEach(payment_method => {
+                data.payment_methods.forEach(payment_method => {
                     rows += `
                     <tr class="d-flex">
                         <td class='col-1'>${i++}</td>

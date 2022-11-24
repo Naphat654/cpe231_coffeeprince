@@ -1,0 +1,66 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+
+from django.shortcuts import get_object_or_404
+from django.views.generic import View
+from django.http import JsonResponse
+from django import forms
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.forms.models import model_to_dict
+from django.db.models import Max
+from django.db import connection
+from order.models import *
+
+import json
+
+# Create your views here.
+def index(request):
+    data = {}
+    return render(request, 'order/order.html', data)
+
+class MenuList(View):
+    def get(self, request):
+        menus = list(Menu.objects.all().values())
+        data = dict()
+        data['menus'] = menus
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
+
+class CustomerList(View):
+    def get(self, request):
+        customers = list(Customer.objects.all().values())
+        data = dict()
+        data['customers'] = customers
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
+
+class CustomerDetail(View):
+    def get(self, request, pk):
+        customer = get_object_or_404(Customer, pk=pk)
+        data = dict()
+        data['customers'] = model_to_dict(customer)
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
+
+
+class PaymentMethodList(View):
+    def get(self, request):
+        payment_methods = list(PaymentMethod.objects.all().values())
+        data = dict()
+        data['payment_methods'] = payment_methods
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
+
+class PaymentMethodDetail(View):
+    def get(self, request, pk):
+        payment_method = get_object_or_404(PaymentMethod, pk=pk)
+        data = dict()
+        data['payment_methods'] = model_to_dict(payment_method)
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response

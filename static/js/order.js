@@ -57,7 +57,7 @@ $(document).ready( function () {
                 $('#txt_CustomerName').val(data.customers.username);
             },
             error: function (xhr, status, error) {
-                $('#txt_CustomerName').val('');
+                $('#txt_Username').val('');
             }
         });
     });
@@ -265,8 +265,8 @@ $('.search_product_code').click(function () {
             
             re_calculate_total_price();
         } else if ($('#txt_modal_param').val() == 'id_user') {
-            $('#txt_Customer').val(code);
-            $('#txt_CustomerName').val(name);
+            $('#txt_IdUser').val(code);
+            $('#txt_Username').val(name);
         } else if ($('#txt_modal_param').val() == 'menu_id') {
             $('#txt_OderNo').val(code);
             $('#txt_OrderDate').val(name);
@@ -478,9 +478,9 @@ $('.search_product_code').click(function () {
             });
             
             re_calculate_total_price();
-        } else if ($('#txt_modal_param').val() == 'customer_id') {
-            $('#txt_CustomerID').val(code);
-            $('#txt_CustomerName').val(name);
+        } else if ($('#txt_modal_param').val() == 'id_user') {
+            $('#txt_IdUser').val(code);
+            $('#txt_Username').val(name);
         } else if ($('#txt_modal_param').val() == 'promotion_code') {
             $('#txt_PromotionCode').val(code);
             $('#txt_Discount').val(name);
@@ -496,8 +496,8 @@ $('.search_product_code').click(function () {
         } else if ($('#txt_modal_param').val() == 'order_no') {
             $('#txt_OrderNo').val(code);
             $('#txt_OrderDate').val(name);
-            $('#txt_CustomerID').val(note);
-            $('#txt_CustomerID').change();
+            $('#txt_IdUser').val(note);
+            $('#txt_IdUser').change();
             $('#txt_PromotionCode').val(pro);
             $('#txt_PromotionCode').change();
             $('#txt_PaymentMethod').val(pay);
@@ -543,7 +543,7 @@ $('.search_product_code').click(function () {
                         <td class='col-1'>${i++}</td>
                         <td class='col-3'><a class='a_click' href='#'>${order.order_no}</a></td>
                         <td class='col-5'>${order_date}</td>
-                        <td class='col-3'>${order.customer_id_id}</td>
+                        <td class='col-3'>${order.id_user_id}</td>
                         <td class='hide'>${order.promotion_code_id}</td>
                         <td class='hide'>${order.payment_method_id}</td>
                         <td class='hide'>${order.employee_id_id}</td>
@@ -564,10 +564,10 @@ $('.search_product_code').click(function () {
     });
     $('#btnSave').click(function () {
 
-        var customer_id = $('#txt_CustomerName').val().trim();
-        if (customer_id == '') {
+        var id_user = $('#txt_Username').val().trim();
+        if (id_user == '') {
             alert('กรุณาระบุ Customer');
-            $('#txt_CustomerID').focus();
+            $('#txt_IdUser').focus();
             return false;
         }
         var order_date = $('#txt_OrderDate').val().trim();
@@ -730,8 +730,8 @@ function reset_form() {
     
     $('#txt_OrderDate').val(new Date().toJSON().slice(0,10).split('-').reverse().join('/'));
 
-    $('#txt_CustomerID').val('0000000000');
-    $('#txt_CustomerName').val('Unknown');
+    $('#txt_IdUser').val('0000000000');
+    $('#txt_Username').val('Unknown');
     $('#txt_PromotionCode').val('NoPromotion');
     $('#txt_Discount').val('0.00');
     $('#txt_PaymentMethod').val('');

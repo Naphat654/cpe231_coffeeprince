@@ -1,0 +1,226 @@
+{% extends 'order/base_order.html' %}
+{% load static %}
+
+{% block title %}Coffee Prince{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/order.js' %}"></script>
+    
+{% endblock %}
+
+{% block content %}
+<body style="background-color:light);"></body>
+    <nav class="bg-5">
+ 
+    </nav>
+    <div style="font-size:0;" class="bg-6">
+        <input type='image' id='btnNew' src="{% static 'images/new.png' %}"  alt="newOn" width="45" height="45">
+        <input type='image' id='btnEdit' src="{% static 'images/edit.png' %}"  alt="editOn" width="45" height="45">
+        <input type='image' id='btnSave' src="{% static 'images/save.png' %}"  alt="saveOn" width="45" height="45">
+        <input type='image' id='btnDelete' src="{% static 'images/delete.png' %}"  alt="deleteOn" width="45" height="45">
+        <input type='image' id='btnPrint' src="{% static 'images/pdf.png' %}"  alt="pdfOn" width="45" height="45">
+        <input type='image' id='btnPdf' src="{% static 'images/print.png' %}"  alt="printOn" width="45" height="45">
+    </div>
+    <br />
+    <form id='form_order' action='/'>
+    {% csrf_token %}
+<!-- บรรทัด1 Order -->
+    <div class="container-fluid">
+        <div class='form-row align-items-center'>
+            <div class="col-lg-4 col-md10 col-12 col-auto">
+                <div class='input-group mb-2'>
+                    <div class='input-group-prepend'>
+                        <div class='input-group-text'>*Order No :</div>
+                    </div>
+                    <input type='text' id='txt_OrderNo' name='order_no' class='form-control' placeholder='Order No'>
+                </div>
+            </div>
+            <div class="col-0 col-lg-1"></div>
+            <div class="col-lg-4 col-md-8 col-12 col-auto">
+                <div class='input-group mb-2'>
+                    <div class='input-group-prepend'>
+                        <div class='input-group-text'>*Order Date :</div>
+                    </div>
+                    <input type='text' id='txt_OrderDate' name='date' class='form-control' required>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Check this checkbox to continue.</div>
+                    <button type='button' class="btn btn-default" id='btn_OrderDate'>
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br />
+<!-- บรรทัด2 Customer -->
+        <div class='form-row'>
+            <div class="col-lg-4 col-md-8 col-12 col-auto">
+                <div class='input-group mb-2'>
+                    <div class='input-group-prepend'>
+                        <div class='input-group-text'>*Customer :</div>
+                    </div>
+                    <input type='text' id='txt_CustomerID' name='customer_id' class='form-control' placeholder='Customer ID' required>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Check this checkbox to continue.</div>
+                    <button type='button' class="btn btn-default btn-sm search_id_user">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                    <input type='text' id='txt_Username' name='name' class='form-control' value='' readonly>
+                    
+                </div>
+            </div>
+        </div>
+<!-- บรรทัด3 Customer -->
+        <div class='form-row'>
+            <div class="col-lg-4 col-md-8 col-12 col-auto">
+                <div class='input-group mb-2'>
+                    <div class='input-group-prepend'>
+                        <div class='input-group-text'>*Payment Method :</div>
+                    </div>
+                    <input type='text' id='txt_PaymentMethod' name='payment_method' class='form-control' placeholder='Payment Method' required>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Check this checkbox to continue.</div>
+                    <button type='button' class="btn btn-default btn-sm search_payment_method">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                    <input type='text' id='txt_Description' name='description' class='form-control' value='' readonly>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br />
+    Products Sold:
+    <div id='div_table' class="table-responsive-sm table-editable">
+        {% block main %}
+        <table id='table_main' class="table table-sm table-fixed table-bordered">
+            <thead>
+                <tr class="d-flex">
+                    <td class="col-1 table-active border-secondary" align="center"><b>#</b></td>
+                    <th class="col-1 table-active border-secondary" scope="row" >*Menu Code</th>
+                    <th class="col-2 table-active border-secondary" scope="row" >Name</th>
+                    <th class="col-1 table-active border-secondary" scope="row" >Type</th>
+                    <th class="col-1 table-active border-secondary" scope="row" >Sweet Level</th>
+                    <th class="col-1 table-active border-secondary" scope="row" >*Unit Price</th>
+                    <th class="col-2 table-active border-secondary" scope="row" >*Quantity</th>
+                    <th class="col-2 table-active border-secondary" scope="row" >Product Total</th>
+                    <td class="col-1 border-secondary" align="center">
+                        <span class="table-add glyphicon glyphicon-plus"></span>
+                    </td>
+                </tr> 
+                <tr class="d-flex hide">
+                    <td class="col-1 order_no table-active border-secondary" scope="row" align="center"></td>
+                    <td class="col-1 project_code_1 border-secondary" scope="row" align="right">
+                        <span class='project_code'></span>
+                        <button type='button' class="btn btn-default btn-sm search_menu_code">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </td>
+                    <td class="col-2 product_name border-secondary" scope="row"></td>
+                    <td class="col-1 type border-secondary" scope="row" align="right">
+                        <span class='type'></span>
+                        <button type='button' class="btn btn-default btn-sm search_menu_code">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </td>
+                    <td class="col-1 sweet border-secondary" scope="row" align="right">
+                        <span class='sweet_level'></span>
+                        <button type='button' class="btn btn-default btn-sm search_menu_code">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </td> 
+                    <td class="col-1 unit_price border-secondary" scope="row" pattern="^[0-9]" align="right" contenteditable="true"></td>
+                    <td class="col-2 quantity border-secondary" scope="row" pattern="^[0-9]" align="right" contenteditable="true"></td>
+                    <td class="col-2 product_total table-active border-secondary" scope="row" align="right"></td>
+                    <td class="col-1 border-secondary"align="center">
+                        <span class="table-remove glyphicon glyphicon-remove"></span>
+                    </td>
+                </tr>                
+            </thead>
+            <tbody>
+
+            </tbody>
+            <tfoot>
+                <tr class="d-flex">
+                    <td class="col-9 border-secondary" scope="row" colspan='5' align="right" class='border-0'>Total Price : </td>
+                    <td class="col-2 table-active border-secondary" scope="row" align="right"><label id='lbl_TotalPrice' ></label></td>
+                    
+                    <input type='hidden' id='txt_TotalPrice' name='total' />
+                </tr>
+                <tr class="d-flex">
+                    <td class="col-9 border-secondary" scope="row" colspan='5' align="right" class='border-0'>Discount : </td>
+                    <td class="col-2 table-active border-secondary" scope="row" align="right"><label id='lbl_Rebate' ></label></td>
+                    
+                    <input type='hidden' id='txt_Rebate' name='rebate' />
+                </tr>
+                <tr class="d-flex">
+                    <td class="col-9 border-secondary" scope="row" colspan='5' align="right" class='border-0'>Remain : </td>
+                    <td class="col-2 table-active border-secondary scope="row" align="right"><label id='lbl_Remain' ></label></td>
+                    
+                    <input type='hidden' id='txt_Remain' name='remain' />
+                </tr>
+            </toot>
+        </table>
+        {% endblock %}
+    </div>
+    </form>
+
+<!-- The Modal -->
+<div class="modal" id="modal_form">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <input type='hidden' id='txt_modal_param' />
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">List Of Value</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body modal-dialog-scrollable">
+            <table id='table_modal' class="table table-sm table-bordered">
+                <thead>
+                    <tr class="d-flex">
+                        <th class='col-1' scope="row">#</th>
+                        <th class='col-3' scope="row"><label id='model_header_1'>Code</label></th>
+                        <th class='col-5' scope="row"><label id='model_header_2'>Name</label></th>
+                        <th class='col-3' scope="row"><label id='model_header_3'>Note</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="d-flex">
+                        <td class='col-1'>1</td>
+                        <td class='col-3'><a class='a_click' href='#'></a></td>
+                        <td class='col-5'></td>
+                        <td class='col-3'></td>
+                        <td class='hide'></td>
+                    </tr>
+                    <tr class="d-flex">
+                        <td class='col-1'>2</td>
+                        <td class='col-3'><a class='a_click' href='#'></a></td>
+                        <td class='col-5'></td>
+                        <td class='col-3'></td>
+                        <td class='hide'></td>
+                    </tr>
+                    <tr class="d-flex">
+                        <td class='col-1'>3</td>
+                        <td class='col-3'><a class='a_click' href='#'></a></td>
+                        <td class='col-5'></td>
+                        <td class='col-3'></td>
+                        <td class='hide'></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

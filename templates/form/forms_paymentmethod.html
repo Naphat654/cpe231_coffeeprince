@@ -1,0 +1,103 @@
+{% extends 'form/base_form.html' %}
+
+{% block content %}
+    
+    <form id='form_get' action='/paymentmethod/get' method=GET>
+        <label>Payment Method</label>
+        <input type=text name='payment_method' value=''>
+        <input type=submit value='GET'class="btn btn-dark ">
+    </form>
+
+    <button id='btnPaymentMethodList'class="btn btn-dark ">PaymentMethod List</button>
+
+    <form id='form_paymentmethod' action='/paymentmethod/save' method=POST>
+        {% csrf_token %}
+        <table id='PaymentMethodList' class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Payment Method</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for list in paymentmethods %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ list.payment_method }}</td>
+                        <td>{{ list.description }}</td>
+                        <td></td>
+                    <tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td id='btnAddPaymentMethod' class='btn'> + </td>
+                    <td><input type='text' id='payment_method' name='payment_method' /></td>
+                    <td><input type='text' id='description' name='description' /></td>
+                    <td><input type='submit' value='Add'class="btn btn-dark "></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>    
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready( function () {
+        $('#btnPaymentMethodList').click(function() {
+            console.log('btnPaymentMethodList');
+            $.ajax({
+                url:  '/paymentmethod1/list',
+                type:  'get',
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.paymentmethods.forEach(paymentmethod => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${paymentmethod.payment_method}</td>
+                            <td class='col-3'>${paymentmethod.description}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#PaymentMethodList > tbody').html(rows);
+                },
+            });        
+        });
+
+        $('#btnAddPaymentMethod').click(function() {
+            console.log('btnAddPaymentMethod');
+            var token = $('[name=csrfmiddlewaretoken]').val();
+            $.ajax({
+                url:  '/paymentmethod/save2',
+                type:  'post',
+                data: $('#form_paymentmethod').serialize(),
+                headers: { "X-CSRFToken": token },
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.paymentmethods.forEach(paymentmethod => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${paymentmethod.payment_method}</td>
+                            <td class='col-3'>${paymentmethod.description}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#PaymentMethodList > tbody').html(rows);
+                },
+            });   
+        });
+    });
+</script>
+{% endblock %}
+</body>
+</html>
+
+

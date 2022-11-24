@@ -1,0 +1,111 @@
+{% extends 'form/base_form.html' %}
+
+{% block content %}
+    
+    <form id='form_get' action='/employee/get' method=GET>
+        <label>Employee ID</label>
+        <input type=text name='employee_id' value=''>
+        <input type=submit value='GET'class="btn btn-dark ">
+    </form>
+
+    <button id='btnEmployeeList'class="btn btn-dark ">Employee List</button>
+
+    <form id='form_employee' action='/employee/save' method=POST>
+        {% csrf_token %}
+        <table id='EmployeeList' class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for list in employees %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ list.employee_id }}</td>
+                        <td>{{ list.name }}</td>
+                        <td>{{ list.address }}</td>
+                        <td>{{ list.phone_number }}</td>
+                        <td></td>
+                    <tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td id='btnAddEmployee' class='btn'> + </td>
+                    <td><input type='text' id='employee_id' name='employee_id' /></td>
+                    <td><input type='text' id='name' name='name' /></td>
+                    <td><input type='text' id='address' name='address' /></td>
+                    <td><input type='text' id='phone_number' name='phone_number' /></td>
+                    <td><input type='submit' value='Add'class="btn btn-dark "></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>    
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready( function () {
+        $('#btnEmployeeList').click(function() {
+            console.log('btnEmployeeList');
+            $.ajax({
+                url:  '/employee/list',
+                type:  'get',
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.employees.forEach(employee => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${employee.employee_id}</td>
+                            <td class='col-3'>${employee.name}</td>
+                            <td class='col-3'>${employee.address}</td>
+                            <td class='col-3'>${employee.phone_number}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#EmployeeList > tbody').html(rows);
+                },
+            });        
+        });
+
+        $('#btnAddEmployee').click(function() {
+            console.log('btnAddEmployee');
+            var token = $('[name=csrfmiddlewaretoken]').val();
+            $.ajax({
+                url:  '/employee/save2',
+                type:  'post',
+                data: $('#form_employee').serialize(),
+                headers: { "X-CSRFToken": token },
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.employees.forEach(employee => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${employee.employee_id}</td>
+                            <td class='col-3'>${employee.name}</td>
+                            <td class='col-3'>${employee.address}</td>
+                            <td class='col-3'>${employee.phone_number}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#EmployeeList > tbody').html(rows);
+                },
+            });   
+        });
+    });
+</script>
+{% endblock %}
+</body>
+</html>

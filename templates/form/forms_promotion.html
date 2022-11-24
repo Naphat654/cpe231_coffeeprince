@@ -1,0 +1,106 @@
+{% extends 'form/base_form.html' %}
+
+{% block content %}
+    
+    <form id='form_get' action='/promotion/get' method=GET>
+        <label>Promotion Code</label>
+        <input type=text name='promotion_code' value=''>
+        <input type=submit value='GET'class="btn btn-dark ">
+    </form>
+
+    <button id='btnPromotionList'class="btn btn-dark ">Promotion List</button>
+
+    <form id='form_promotion' action='/promotion/save' method=POST>
+        {% csrf_token %}
+        <table id='PromotionList' class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Promotion Code</th>
+                    <th>Description</th>
+                    <th>Discount</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for list in promotions %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ list.promotion_code }}</td>
+                        <td>{{ list.description }}</td>
+                        <td>{{ list.discount}}</td>
+                        <td></td>
+                    <tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td id='btnAddPromotion' class='btn'> + </td>
+                    <td><input type='text' id='promotion_code' name='promotion_code' /></td>
+                    <td><input type='text' id='description' name='description' /></td>
+                    <td><input type='text' id='discount' name='discount' /></td>
+                    <td><input type='submit' value='Add'class="btn btn-dark "></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>    
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready( function () {
+        $('#btnPromotionList').click(function() {
+            console.log('btnPromotionList');
+            $.ajax({
+                url:  '/promotion/list',
+                type:  'get',
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.promotions.forEach(promotion => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${promotion.promotion_code}</td>
+                            <td class='col-3'>${promotion.description}</td>
+                            <td class='col-3'>${promotion.discount}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#PromotionList > tbody').html(rows);
+                },
+            });        
+        });
+
+        $('#btnAddPromotion').click(function() {
+            console.log('btnAddPromotion');
+            var token = $('[name=csrfmiddlewaretoken]').val();
+            $.ajax({
+                url:  '/promotion/save2',
+                type:  'post',
+                data: $('#form_promotion').serialize(),
+                headers: { "X-CSRFToken": token },
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.promotions.forEach(promotion => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${promotion.promotion_code}</td>
+                            <td class='col-3'>${promotion.description}</td>
+                            <td class='col-3'>${promotion.discount}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#PromotionList > tbody').html(rows);
+                },
+            });   
+        });
+    });
+</script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,80 @@
+{% extends 'base_blank.html' %}
+{% load static %}
+
+{% block title %}Order Report{% endblock %}
+
+{% block title_name %}Order Form{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+{% block content %}
+<div id='content'>
+    <div class='row'>
+        <div class='col-sm'>
+        Order No: {{ order.order_no }}<br>
+        </div>
+        <div class='col-sm'>
+        Order Date: {{ order.date }}<br>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-sm'>
+        Customer ID: {{ order.customer_id }}<br>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-sm'>
+        Total: {{ order.remain }}<br>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-sm'>
+        Promotion Code: {{ order.promotion_code }}<br>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-sm'>
+        Payment Method: {{ order.payment_method }}<br>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-sm'>
+        Employee ID: {{ order.employee_id }}<br>
+        </div>
+    </div>
+    <table class='table'>
+        <tr>
+            <th>#</th>
+            <th>Menu Code</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Product Total</th>
+        </tr>
+    {% for lineitem in orderlineitem %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ lineitem.menu_code }}</td>
+            <td align='left'>{{ lineitem.unit_price }}</td>
+            <td align='left'>{{ lineitem.quantity }}</td>
+            <td align='left'>{{ lineitem.product_total }}</td>
+        <tr>
+    {% endfor %}
+        <tr>
+            <td colspan='3'></td>
+            <td align='right'>Rebate</td><td align='left'>{{ order.rebate }}</td>
+        </tr>
+        <tr>
+            <td colspan='3'></td>
+            <td align='right'>Total Price</td><td align='left'>{{ order.total }}</td>
+        </tr>
+        <tr>
+            <td colspan='3'></td>
+            <td align='right'>Remain</td><td align='left'>{{ order.remain }}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}
+
+
+            

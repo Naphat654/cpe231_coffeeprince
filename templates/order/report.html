@@ -1,0 +1,39 @@
+{% extends 'base_blank.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Order Report{% endblock %}
+
+{% block title_name %}Order Report{% endblock %}
+
+{% block content %}
+<body style="background-color:rgb(255, 241, 220);"></body>
+    
+    <table class='table table-bordered table-hover'>
+        <thead class="bg-7">
+        <tr>
+            <th>#</th>
+            {% for name in column_name %}
+            <th>{{ name }} </th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+    {% for lineitem in data %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ lineitem.order_no }}</td>
+            <td>{{ lineitem.date|default:""}}</td>
+            <td>{{ lineitem.customer_id }}</td>
+            <td>{{ lineitem.customer_name }}</td>
+            <td>{{ lineitem.total|intcomma }}</td>
+            <td>{{ lineitem.promotion_code }}</td>
+            <td>{{ lineitem.payment_method }}</td>
+            <td>{{ lineitem.employee_id }}</td>
+            <td>{{ lineitem.rebate }}</td>
+            <td>{{ lineitem.remain }}</td>
+
+        <tr>
+    {% endfor %}
+        </tbody>
+{% endblock %}

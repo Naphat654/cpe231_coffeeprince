@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Report{% endblock %}
+
+{% block content %}
+
+    <form id='form_get' action='/report/report' method=GET>
+        <label>Start Date(yyyy-mm-dd):</label>
+        <input type=text name='date1' value=''>
+
+        <label>End Date(yyyy-mm-dd):</label>
+        <input type=text name='date2' value=''>
+        <input type=submit value='GET' class="btn btn-dark ">
+    
+        {% csrf_token %}    
+            <table id='ReportList' class='table'>
+                <tr>
+                    <th>#</th>
+                    {% for name in column_name %}
+                    <th>{{ name }} </th>
+                    {% endfor %}
+                </tr>
+            {% for lineitem in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ lineitem.menu_code }}</td>
+                    <td>{{ lineitem.unit_price }}</td>
+                    <td>{{ lineitem.quantity }}</td>
+                    <td>{{ lineitem.total }}</td>
+                <tr>
+            {% endfor %}
+            <th> </th>
+            <th> </th>
+            <tr>
+                <th>#</th>
+                    {% for name in column_name2 %}
+                    <th>{{ name }} </th>
+                    {% endfor %}
+            </tr>
+            {% for lineitem in data2 %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ lineitem.total }}</td>
+                    
+                <tr>
+            {% endfor %}
+    </form>
+
+{% endblock %}

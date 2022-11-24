@@ -1,0 +1,121 @@
+{% extends 'form/base_form.html' %}
+
+{% block content %}
+    
+    <form id='form_get' action='/customer/get' method=GET>
+        <label>Customer ID</label>
+        <input type=text name='customer_id' value=''>
+        <input type=submit value='GET'class="btn btn-dark ">
+    </form>
+
+    <button id='btnCustomerList'class="btn btn-dark ">Customer List</button>
+
+    <form id='form_customer' action='/customer/save' method=POST>
+        {% csrf_token %}
+        <table id='CustomerList' class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Customer ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Phone number</th>
+                    <th>Password</th>
+                    <th>Point</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for list in customers %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ list.id_user }}</td>
+                        <td>{{ list.username }}</td>
+                        <td>{{ list.email }}</td>
+                        <td>{{ list.phone_number }}</td>
+                        <td>{{ list.password }}</td>
+                        <td>{{ list.point }}</td>
+                        <td></td>
+                    <tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td id='btnAddCustomer' class='btn'> + </td>
+                    <td><input type='text' id='customer_id' name='id_user' /></td>
+                    <td><input type='text' id='customer_name' name='username' /></td>
+                    <td><input type='text' id='customer_mail' name='email' /></td>
+                    <td><input type='text' id='customer_phone' name='phone_number' /></td>
+                    <td><input type='text' id='customer_pass' name='password' /></td>
+                    <td><input type='text' id='customer_point' name='point' /></td>
+                    <td><input type='submit' value='Add'class="btn btn-dark "></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>    
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready( function () {
+        $('#btnCustomerList').click(function() {
+            console.log('btnCustomerList');
+            $.ajax({
+                url:  '/customer/list',
+                type:  'get',
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.customers.forEach(customer => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${customer.id_user}</td>
+                            <td class='col-3'>${customer.username}</td>
+                            <td class='col-4'>${customer.email}</td>
+                            <td class='col-5'>${customer.phone_number}</td>
+                            <td class='col-6'>${customer.password}</td>
+                            <td class='col-6'>${customer.point}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#CustomerList > tbody').html(rows);
+                },
+            });        
+        });
+
+        $('#btnAddCustomer').click(function() {
+            console.log('btnAddCustomer');
+            var token = $('[name=csrfmiddlewaretoken]').val();
+            $.ajax({
+                url:  '/customer/save2',
+                type:  'post',
+                data: $('#form_customer').serialize(),
+                headers: { "X-CSRFToken": token },
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.customers.forEach(customer => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${customer.id_user}</td>
+                            <td class='col-3'>${customer.username}</td>
+                            <td class='col-4'>${customer.email}</td>
+                            <td class='col-5'>${customer.phone_number}</td>
+                            <td class='col-6'>${customer.password}</td>
+                            <td class='col-6'>${customer.point}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#CustomerList > tbody').html(rows);
+                },
+            });   
+        });
+    });
+</script>
+{% endblock %}
+</body>
+</html>

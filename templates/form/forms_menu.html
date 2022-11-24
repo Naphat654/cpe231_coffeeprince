@@ -1,0 +1,101 @@
+{% extends 'form/base_form.html' %}
+
+{% block content %}
+    
+    <form id='form_get' action='/menu/get' method=GET>
+        <label>Menu Code</label>
+        <input type=text name='menu_code' value=''>
+        <input type=submit value='GET'class="btn btn-dark ">
+    </form>
+
+    <button id='btnMenuList'class="btn btn-dark ">Menu List</button>
+
+    <form id='form_menu' action='/menu/save' method=POST>
+        {% csrf_token %}
+        <table id='MenuList' class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Menu Code</th>
+                    <th>Unit Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for list in menus %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ list.menu_code }}</td>
+                        <td>{{ list.unit_price }}</td>
+                        <td></td>
+                    <tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td id='btnAddMenu' class='btn'> + </td>
+                    <td><input type='text' id='menu_code' name='menu_code' /></td>
+                    <td><input type='text' id='unit_price' name='unit_price' /></td>
+                    <td><input type='submit' value='Add'class="btn btn-dark "></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>    
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready( function () {
+        $('#btnMenuList').click(function() {
+            console.log('btnMenuList');
+            $.ajax({
+                url:  '/menu/list',
+                type:  'get',
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.menus.forEach(menu => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${menu.menu_code}</td>
+                            <td class='col-3'>${menu.unit_price}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#MenuList > tbody').html(rows);
+                },
+            });        
+        });
+
+        $('#btnAddMenu').click(function() {
+            console.log('btnAddMenu');
+            var token = $('[name=csrfmiddlewaretoken]').val();
+            $.ajax({
+                url:  '/menu/save2',
+                type:  'post',
+                data: $('#form_menu').serialize(),
+                headers: { "X-CSRFToken": token },
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.menus.forEach(menu => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${menu.menu_code}</td>
+                            <td class='col-3'>${menu.unit_price}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#MenuList > tbody').html(rows);
+                },
+            });   
+        });
+    });
+</script>
+{% endblock %}
+</body>
+</html>

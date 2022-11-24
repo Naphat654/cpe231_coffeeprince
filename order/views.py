@@ -110,3 +110,24 @@ class SweetDetail(View):
         response = JsonResponse(data)
         response["Access-Control-Allow-Origin"] = "*"
         return response
+
+#    *AdditionalItems
+class AdditionalItemsList(View):
+    def get(self, request):
+        additionalitems = list(AdditionalItems.objects.all().values())
+        data = dict()
+        data['additionalitems'] = additionalitems
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
+
+class AdditionalItemsDetail(View):
+    def get(self, request, pk):
+        sweets = get_object_or_404(AdditionalItems, pk=pk)
+        data = dict()
+        data['additionalitems'] = model_to_dict(AdditionalItems)
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
+
+

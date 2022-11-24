@@ -36,6 +36,8 @@ urlpatterns = [
     path('paymentmethod/detail/<pk>', order_views.PaymentMethodDetail.as_view(), name='payment_method_detail'),
     path('sweet/list', order_views.SweetList.as_view(), name='payment_method_list'),
     path('sweet/detail/<pk>', order_views.SweetDetail.as_view(), name='payment_method_detail'),
+    path('additional_items/list', order_views.AdditionalItemsList.as_view(), name='payment_method_list'),
+    path('additional_items/detail/<pk>', order_views.AdditionalItemsDetail.as_view(), name='payment_method_detail'),
     
     path('home', home_views.index, name='index'),
     path('Home', home_views.Home),

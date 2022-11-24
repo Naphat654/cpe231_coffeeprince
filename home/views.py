@@ -20,5 +20,5 @@ def Home(request):
 def recommended_menu(request):
     return render(request, 'home/Recommended_Menu.html')
 
-def promotion(request):
-    return render(request, 'home/Promotion.html')
+def stock(request):
+    return render(request, 'home/Stock.html')

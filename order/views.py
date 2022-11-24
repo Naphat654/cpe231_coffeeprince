@@ -65,7 +65,23 @@ class PaymentMethodDetail(View):
         response["Access-Control-Allow-Origin"] = "*"
         return response
 
+class StockList(View):
+    def get(self, request):
+        stocks = list(Stock.objects.all().values())
+        data = dict()
+        data['stock'] = stocks
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
 
+class StockDetail(View):
+    def get(self, request, pk):
+        stock = get_object_or_404(Stock, pk=pk)
+        data = dict()
+        data['stocks'] = model_to_dict(stock)
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
 
 # class Sweet(models.Model):
 #     sweet_level = models.IntegerField(primary_key=True)

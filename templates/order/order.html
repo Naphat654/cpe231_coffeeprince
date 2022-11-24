@@ -58,10 +58,10 @@
                     <div class='input-group-prepend'>
                         <div class='input-group-text'>*Customer :</div>
                     </div>
-                    <input type='text' id='txt_Customer' name='id_user' class='form-control' placeholder='ID User' required>
+                    <input type='text' id='txt_IdUser' name='id_user' class='form-control' placeholder='ID User' required>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Check this checkbox to continue.</div>
-                    <button type='button' class="btn btn-default btn-sm search_id_user">
+                    <button type='button' class="btn btn-default btn-sm search_customer_id">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
                     <input type='text' id='txt_Username' name='username' class='form-control' value='' readonly>
@@ -69,7 +69,7 @@
                 </div>
             </div>
         </div>
-<!-- บรรทัด3 Customer -->
+<!-- บรรทัด3 Payment -->
         <div class='form-row'>
             <div class="col-lg-4 col-md-8 col-12 col-auto">
                 <div class='input-group mb-2'>
@@ -111,17 +111,17 @@
                 </tr> 
                 <tr class="d-flex hide">
                     <td class="col-1 order_no table-active border-secondary" scope="row" align="center"></td>
-                    <td class="col-1 menu_code_1 border-secondary" scope="row" align="right">
+                    <td class="col-1 search_menu_code border-secondary" scope="row" align="right">
                         <span class='menu_code'></span>
                         <div class="valid-feedback">Valid.</div>
                         <div class="invalid-feedback">Check this checkbox to continue.</div>
                         <button type='button' class="btn btn-default btn-sm search_menu_code">
                             <span class="glyphicon glyphicon-search"></span>
                         </button>
-                        <td class="col-2 unit_price border-secondary" scope="row" pattern="^[0-9]" align="right" contenteditable="true"></td>
+                        <td class="col-2 Name border-secondary" scope="row" pattern="^[0-9]" align="right" ></td>
                     </td>
                     
-                    <td class="col-1 menu_name border-secondary" scope="row"></td>
+                    <td class="col-1 UnitPrice border-secondary" scope="row"></td>
                     <td class="col-1 additional_items_1 border-secondary" scope="row" align="right">
                         <span class='additional_items'></span>
                         <button type='button' class="btn btn-default btn-sm search_additional_items">
@@ -140,7 +140,7 @@
                         </button>
                             
                     </td> 
-                    <td class="col-1 unit_price border-secondary" scope="row" pattern="^[0-9]" align="right" contenteditable="true"></td>
+                    <td class="col-1 unit_price2 border-secondary" scope="row" pattern="^[0-9]" align="right" ></td>
                     <td class="col-1 quantity border-secondary" scope="row" pattern="^[0-9]" align="right" contenteditable="true"></td>
                     <td class="col-2 product_total table-active border-secondary" scope="row" align="right"></td>
                     <td class="col-1 border-secondary"align="center">

@@ -6,14 +6,17 @@ class Data(models.Model):
     value = models.CharField(max_length=100)
 
 class Customer(models.Model):
-    customer_id = models.CharField(max_length=10, primary_key=True)
-    name = models.CharField(max_length=50, null=True)
-    address = models.CharField(max_length=100, null=True, blank=True)
+    id_user = models.CharField(max_length=10, primary_key=True)
+    username = models.CharField(max_length=50, null=True)
+    email = models.CharField(max_length=100, null=True, blank=True)
+    phone_number = models.CharField(max_length=100, null=True, blank=True)
+    password = models.CharField(max_length=100, null=True, blank=True)
+    point = models.CharField(max_length=100, null=True, blank=True)
     class Meta:
         db_table = "customer"
         managed = False
     def __str__(self):
-        return self.customer_id 
+        return self.id_user
 
 
 

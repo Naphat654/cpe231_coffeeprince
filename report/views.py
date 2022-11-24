@@ -46,17 +46,18 @@ def report(request):
     if date2 == '':
         date2 = str(datetime.datetime.now().date())
     with connection.cursor() as cursor:
-        cursor.execute (' SELECT ol.menu_code as "Menu Code", '
-                                ' ol.unit_price as "Unit Price", SUM(ol.quantity) as "Quantity", '
+        cursor.execute (' SELECT m.menu_name as "Menu Name", '
+                                ' o.total_price as "Unit Price", ol.amount as "Quantity", '
                                 ' (ol.unit_price)*SUM(ol.quantity) as "Total" '
-                                ' FROM order_lineitem as ol JOIN order1 as o ON o.order_no = ol.order_no' 
+                                ' FROM order_line_item as ol JOIN orders as o ON o.order_no = ol.order_no'
+                                ' JOIN menu as m ON m.menu_id = ol.menu_id'
                                 " WHERE o.date BETWEEN '{}' AND '{}' "
-                                ' GROUP BY ol.menu_code, ol.unit_price'.format(str(date1),str(date2)))
+                                ' GROUP BY ol.menu_name, ol.total_price'.format(str(date1),str(date2)))
         row = dictfetchall(cursor)
         column_name = [col[0] for col in cursor.description]
 
-        cursor.execute ('SELECT SUM(o.total) as "Total" '
-                                ' FROM order1 as o '
+        cursor.execute ('SELECT SUM(o.total_price) as "Total" '
+                                ' FROM orders as o '
                                 " WHERE o.date BETWEEN '{}' AND '{}' ".format(str(date1),str(date2)))
         row2 = dictfetchall(cursor)
         column_name2 = [col[0] for col in cursor.description]

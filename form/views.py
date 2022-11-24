@@ -90,7 +90,7 @@ class CustomerSave2(View):
         return response
         #return render(request, 'forms_customer.html', data)
 
-############################# Stock ##############################
+############################# STOCK ##############################
 
 # Create your views here.
 def stock(request):

@@ -18,13 +18,19 @@ class Customer(models.Model):
 
 
 class Menu(models.Model):
-    menu_code = models.CharField(max_length=50,primary_key=True)
-    unit_price = models.FloatField(null=True, blank=True)
+    menu_id = models.CharField(max_length=10,primary_key=True)
+    menu_name = models.CharField(max_length=20, null=True)
+    price = models.CharField(max_length=10, null=True)
+    amount_of_coffee = models.CharField(max_length=20, null=True)
+    amount_of_milk = models.CharField(max_length=20, null=True)
+    amount_of_chocolate = models.CharField(max_length=20, null=True)
+    amount_of_syrup = models.CharField(max_length=20, null=True)
     class Meta:
         db_table = "menu"
         managed = False
     def __str__(self):
-        return self.menu_code 
+        return self.menu_id 
+
 
 class PaymentMethod(models.Model):
     payment_method = models.CharField(max_length=100,primary_key=True)

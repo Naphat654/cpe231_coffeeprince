@@ -4,7 +4,7 @@
     
     <form id='form_get' action='/menu/get' method=GET>
         <label>Menu Code</label>
-        <input type=text name='menu_code' value=''>
+        <input type=text name='menu_id' value=''>
         <input type=submit value='GET'class="btn btn-dark ">
     </form>
 
@@ -16,8 +16,13 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Menu Code</th>
-                    <th>Unit Price</th>
+                    <th>Menu ID</th>
+                    <th>Menu Name</th>
+                    <th>Price</th>
+                    <th>Amount of Coffee</th>
+                    <th>Amount of Milk</th>
+                    <th>Amount of Chocolate</th>
+                    <th>Amount of Syrup</th>
                     <th></th>
                 </tr>
             </thead>
@@ -25,8 +30,13 @@
                 {% for list in menus %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{ list.menu_code }}</td>
-                        <td>{{ list.unit_price }}</td>
+                        <td>{{ list.menu_id }}</td>
+                        <td>{{ list.menu_name }}</td>
+                        <td>{{ list.price }}</td>
+                        <td>{{ list.amount_of_coffee }}</td>
+                        <td>{{ list.amount_of_milk }}</td>
+                        <td>{{ list.amount_of_chocolate }}</td>
+                        <td>{{ list.amount_of_syrup }}</td>
                         <td></td>
                     <tr>
                 {% endfor %}
@@ -34,8 +44,13 @@
             <tfoot>
                 <tr>
                     <td id='btnAddMenu' class='btn'> + </td>
-                    <td><input type='text' id='menu_code' name='menu_code' /></td>
-                    <td><input type='text' id='unit_price' name='unit_price' /></td>
+                    <td><input type='text' id='menu_id' name='menu_id' /></td>
+                    <td><input type='text' id='menu_id' name='menu_name' /></td>
+                    <td><input type='text' id='price' name='price' /></td>
+                    <td><input type='text' id='amount_of_coffee' name='amount_of_coffee' /></td>
+                    <td><input type='text' id='amount_of_milk' name='amount_of_milk' /></td>
+                    <td><input type='text' id='amount_of_chocolate' name='amount_of_chocolate' /></td>
+                    <td><input type='text' id='amount_of_syrup' name='amount_of_syrup' /></td>
                     <td><input type='submit' value='Add'class="btn btn-dark "></td>
                 </tr>
             </tfoot>
@@ -59,8 +74,13 @@
                         rows += `
                         <tr>
                             <td class='col-1'>${i++}</td>
-                            <td class='col-2'>${menu.menu_code}</td>
-                            <td class='col-3'>${menu.unit_price}</td>
+                            <td class='col-2'>${menu.menu_id}</td>
+                            <td class='col-2'>${menu.menu_name}</td>
+                            <td class='col-3'>${menu.price}</td>
+                            <td class='col-3'>${menu.amount_of_coffee}</td>
+                            <td class='col-3'>${menu.amount_of_milk}</td>
+                            <td class='col-3'>${menu.amount_of_chocoalte}</td>
+                            <td class='col-3'>${menu.amount_of_syrup}</td>
                             <td class='hide'></td>
                         </tr>`;
                     });
@@ -85,8 +105,13 @@
                         rows += `
                         <tr>
                             <td class='col-1'>${i++}</td>
-                            <td class='col-2'>${menu.menu_code}</td>
-                            <td class='col-3'>${menu.unit_price}</td>
+                            <td class='col-2'>${menu.menu_id}</td>
+                            <td class='col-2'>${menu.menu_name}</td>
+                            <td class='col-3'>${menu.price}</td>
+                            <td class='col-3'>${menu.amount_of_coffee}</td>
+                            <td class='col-3'>${menu.amount_of_milk}</td>
+                            <td class='col-3'>${menu.amount_of_chocoalte}</td>
+                            <td class='col-3'>${menu.amount_of_syrup}</td>
                             <td class='hide'></td>
                         </tr>`;
                     });

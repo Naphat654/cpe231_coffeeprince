@@ -224,9 +224,9 @@ $('.search_product_code').click(function () {
                     rows += `
                     <tr class="d-flex">
                         <td class='col-1'>${i++}</td>
-                        <td class='col-3'><a class='a_click' href='#'>${menu.menu_code}</a></td>
-                        <td class='col-5'>${menu.name}</td>
-                        <td class='col-3'></td>
+                        <td class='col-3'><a class='a_click' href='#'>${menu.menu_id}</a></td>
+                        <td class='col-5'>${menu.menu_name}</td>
+                        <td class='col-3'>${formatNumber(menu.price)}</td>
                         <td class='hide'></td>
                     </tr>`;
                 });
@@ -234,13 +234,49 @@ $('.search_product_code').click(function () {
 
                 $('#model_header_1').text('Menu Code');
                 $('#model_header_2').text('Menu Name');
+                $('#model_header_3').text('Unit Price');
                 // $('#model_header_3').text('Note');
 
             },
         });        
         // open popup
-        $('#txt_modal_param').val('menu_code');
+        $('#txt_modal_param').val('menu_id');
         $('#modal_form').modal();
+    });
+
+    // After click link in Model (popup), Return value of product_code, customer_code, invoice_no to main form
+    $('body').on('click', 'a.a_click', function() {
+        var code = $(this).parents('tr').find('td:nth-child(2)').children().html();
+        var name = $(this).parents('tr').find('td:nth-child(3)').html();
+        var note = $(this).parents('tr').find('td:nth-child(4)').html();
+        var option = $(this).parents('tr').find('td:nth-child(5)').html();
+
+        if ($('#txt_modal_param').val() == 'menu_id') {
+            // Loop each in data table
+            $("#table_main tbody tr").each(function() {
+                // Return data in row number = * (jquery mark * before popup (modal) )
+                if ($(this).find('.order_no').html() == '*') {
+                    // return selected product detail (code,name,units) to table row
+                    $(this).find('.menu_id_1 > span').html(code);
+                    $(this).find('.menu_name').html(name);
+                    $(this).find('.price').html(note);   // default quantiy is '1'
+                }
+            });
+            
+            re_calculate_total_price();
+        } else if ($('#txt_modal_param').val() == 'id_user') {
+            $('#txt_Customer').val(code);
+            $('#txt_CustomerName').val(name);
+        } else if ($('#txt_modal_param').val() == 'menu_id') {
+            $('#txt_OderNo').val(code);
+            $('#txt_OrderDate').val(name);
+            $('#txt_Customer').val(note);
+            $('#txt_UserName').change();
+
+            get_menu_detail(code);
+        }
+
+        $('#modal_form').modal('toggle');               // close modal
     });
     // /* search additional_items*/
     // $('.search_additional_items').click(function () {
@@ -288,8 +324,8 @@ $('.search_product_code').click(function () {
                     rows += `
                     <tr class="d-flex">
                         <td class='col-1'>${i++}</td>
-                        <td class='col-3'><a class='a_click' href='#'>${customer.customer_id}</a></td>
-                        <td class='col-5'>${customer.name}</td>
+                        <td class='col-3'><a class='a_click' href='#'>${customer.id_user}</a></td>
+                        <td class='col-5'>${customer.username}</td>
                         <td class='col-3'></td>
                         <td class='hide'></td>
                     </tr>`;
@@ -303,7 +339,7 @@ $('.search_product_code').click(function () {
             },
         });        
         // open popup
-        $('#txt_modal_param').val('customer_id');
+        $('#txt_modal_param').val('id_user');
         $('#modal_form').modal();
     });
 

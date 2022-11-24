@@ -46,15 +46,15 @@ $(document).ready( function () {
     });
 
     $('#txt_CustomerID').change (function () {
-        var customer_id = $(this).val().trim();
+        var id_user = $(this).val().trim();
 
         $.ajax({
-            url:  '/customer/detail/' + customer_id,
+            url:  '/customer/detail/' + id_user,
             type:  'get',
             dataType:  'json',
             success: function  (data) {
-                $('#txt_CustomerID').val(data.customers.customer_id);
-                $('#txt_CustomerName').val(data.customers.name);
+                $('#txt_CustomerID').val(data.customers.id_user);
+                $('#txt_CustomerName').val(data.customers.username);
             },
             error: function (xhr, status, error) {
                 $('#txt_CustomerName').val('');

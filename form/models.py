@@ -84,7 +84,7 @@ class Sweet(models.Model):
     def __str__(self):
         return self.sweet_level
 
-class Order(models.Model):
+class Orders(models.Model):
     order_no = models.CharField(max_length=10, primary_key=True)
     id_user = models.ForeignKey(Customer, on_delete=models.CASCADE, db_column='id_user')
     date = models.DateField(null=True)
@@ -93,16 +93,16 @@ class Order(models.Model):
     received = models.FloatField(null=True, blank=True)
     change = models.FloatField(null=True, blank=True)
     class Meta:
-        db_table = "order"
+        db_table = "orders"
         managed = False
     def __str__(self):
         return "%s %s" % (self.order_no, self.date)              
 
 class OrderLineItem(models.Model):
-    order_no = models.ForeignKey(Order, primary_key=True, on_delete=models.CASCADE, db_column='order_no')
-    menu_id = models.ForeignKey(Menu, primary_key=True, on_delete=models.CASCADE, db_column='menu_id')
-    type = models.ForeignKey(AdditionalItems, primary_key=True, on_delete=models.CASCADE, db_column='order_no')
-    sweet_level = models.ForeignKey(Sweet, primary_key=True, on_delete=models.CASCADE, db_column='order_no')
+    order_no = models.ForeignKey(Orders, on_delete=models.CASCADE, db_column='order_no')
+    menu_id = models.ForeignKey(Menu, on_delete=models.CASCADE, db_column='menu_id')
+    type = models.ForeignKey(AdditionalItems, on_delete=models.CASCADE, db_column='type')
+    sweet_level = models.ForeignKey(Sweet, on_delete=models.CASCADE, db_column='sweet_level')
     amount = models.IntegerField(null=True)
     class Meta:
         db_table = "order_line_item"

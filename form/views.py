@@ -90,81 +90,6 @@ class CustomerSave2(View):
         return response
         #return render(request, 'forms_customer.html', data)
 
-############################ MENU ##############################
-
-# Create your views here.
-def menu(request):
-    menu_id = request.GET.get('menu_id','')
-    menus = list(Menu.objects.filter(menu_id = menu_id).values())
-    data = dict()
-    data['menus'] = menus
-    
-    return render(request, 'form/forms_menu.html', data)
-
-class MenuList(View):
-    def get(self, request):
-        menus = list(Menu.objects.all().values())
-        data = dict()
-        data['menus'] = menus
-        response = JsonResponse(data)
-        response["Access-Control-Allow-Origin"] = "*"
-        return response
-
-class MenuGet(View):
-    def get(self, request, menu_id):
-        menus = list(Menu.objects.filter(menu_id = menu_id).values())
-        data = dict()
-        data['menus'] = menus
-        response = JsonResponse(data)
-        response["Access-Control-Allow-Origin"] = "*"
-        return response        
-
-@method_decorator(csrf_exempt, name='dispatch')
-class MenuSave(View):
-    def post(self, request):
-        request.POST = request.POST.copy()
-
-        form = MenuForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            ret = dict()
-            ret['result'] = "error"
-            return JsonResponse(ret)
-
-        menus = list(Menu.objects.all().values())
-        data = dict()
-        data['menus'] = menus
-        
-        return render(request, 'form/forms_menu.html', data)
-
-class MenuForm(forms.ModelForm):
-    class Meta:
-        model = Menu
-        fields = '__all__'
-
-@method_decorator(csrf_exempt, name='dispatch')
-class MenuSave2(View):
-    def post(self, request):
-        request.POST = request.POST.copy()
-
-        form = MenuForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            ret = dict()
-            ret['result'] = "error"
-            ret['menus'] = list()
-            return JsonResponse(ret)
-
-        menus = list(Menu.objects.all().values())
-        data = dict()
-        data['menus'] = menus
-        response = JsonResponse(data)
-        response["Access-Control-Allow-Origin"] = "*"
-        return response
-        #return render(request, 'forms_customer.html', data)
-
 ############################# Stock ##############################
 
 # Create your views here.
@@ -240,40 +165,43 @@ class StockSave2(View):
         return response
         #return render(request, 'forms_customer.html', data)
 
-############################# DEPENDENT ############################
+############################ INGREDIENT ########################
 
-def dependent(request):
-    employee_id = request.GET.get('employee_id','')
-    dependents = list(Dependent.objects.filter(employee_id=employee_id).values())
+############################ MENU ##############################
+
+# Create your views here.
+def menu(request):
+    menu_id = request.GET.get('menu_id','')
+    menus = list(Menu.objects.filter(menu_id = menu_id).values())
     data = dict()
-    data['dependents'] = dependents
+    data['menus'] = menus
     
-    return render(request, 'form/forms_dependent.html', data)
+    return render(request, 'form/forms_menu.html', data)
 
-class DependentList(View):
+class MenuList(View):
     def get(self, request):
-        dependents = list(Dependent.objects.all().values())
+        menus = list(Menu.objects.all().values())
         data = dict()
-        data['dependents'] = dependents
+        data['menus'] = menus
         response = JsonResponse(data)
         response["Access-Control-Allow-Origin"] = "*"
         return response
 
-class DependentGet(View):
-    def get(self, request, employee_id):
-        dependents = list(Dependent.objects.filter(employee_id=employee_id).values())
+class MenuGet(View):
+    def get(self, request, menu_id):
+        menus = list(Menu.objects.filter(menu_id = menu_id).values())
         data = dict()
-        data['dependents'] = dependents
+        data['menus'] = menus
         response = JsonResponse(data)
         response["Access-Control-Allow-Origin"] = "*"
         return response        
 
 @method_decorator(csrf_exempt, name='dispatch')
-class DependentSave(View):
+class MenuSave(View):
     def post(self, request):
         request.POST = request.POST.copy()
 
-        form = DependentForm(request.POST)
+        form = MenuForm(request.POST)
         if form.is_valid():
             form.save()
         else:
@@ -281,37 +209,40 @@ class DependentSave(View):
             ret['result'] = "error"
             return JsonResponse(ret)
 
-        dependents = list(Dependent.objects.all().values())
+        menus = list(Menu.objects.all().values())
         data = dict()
-        data['dependents'] = dependents
+        data['menus'] = menus
         
-        return render(request, 'form/forms_dependent.html', data)
+        return render(request, 'form/forms_menu.html', data)
 
-class DependentForm(forms.ModelForm):
+class MenuForm(forms.ModelForm):
     class Meta:
-        model = Dependent
+        model = Menu
         fields = '__all__'
 
 @method_decorator(csrf_exempt, name='dispatch')
-class DependentSave2(View):
+class MenuSave2(View):
     def post(self, request):
         request.POST = request.POST.copy()
 
-        form = DependentForm(request.POST)
+        form = MenuForm(request.POST)
         if form.is_valid():
             form.save()
         else:
             ret = dict()
             ret['result'] = "error"
-            ret['dependents'] = list()
+            ret['menus'] = list()
             return JsonResponse(ret)
 
-        dependents = list(Dependent.objects.all().values())
+        menus = list(Menu.objects.all().values())
         data = dict()
-        data['dependents'] = dependents
+        data['menus'] = menus
         response = JsonResponse(data)
         response["Access-Control-Allow-Origin"] = "*"
         return response
+        #return render(request, 'forms_customer.html', data)
+
+
 
 ###################### PAYMENTMETHOD ###########################
 

@@ -41,3 +41,12 @@ class Menu(models.Model):
     def __str__(self):
         return self.menu_id 
 
+class Sweet(models.Model):
+    sweet_level = models.IntegerField(primary_key=True)
+    description = models.CharField(max_length=100, null=True)
+    class Meta:
+        db_table = "sweet"
+        managed = False
+    def __str__(self):
+        return self.sweet_level
+

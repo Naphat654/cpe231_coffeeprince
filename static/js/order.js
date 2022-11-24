@@ -144,54 +144,86 @@ $(document).ready( function () {
         $('#modal_form').modal();
     });
 // ================================================================================
-    /* search product code  */
-    // $('.search_menu_code').click(function () {
-    //     $p_code = $(this).parents('td').children('span').html();
-    //     $(this).parents('tr').find('.order_no').html('*');
+   /* search type */
+$('.search_product_code').click(function () {
+    $(this).parents('tr').find('.order_no').html('*');  // mark row number with '*' for return value after close modal
 
+    $.ajax({                                        // call backend /product/list
+        url:  '/product/list',
+        type:  'get',
+        dataType:  'json',
+        success: function  (data) {
+            let rows =  '';
+            var i = 1;
+            data.products.forEach(product => {       // loop each result of products to create table rows
+                rows += `
+                <tr>
+                    <td>${i++}</td>
+                    <td><a class='a_click' href='#'>${product.code}</a></td>
+                    <td>${product.name}</td>
+                    <td>${formatNumber(product.units)}</td>
+                    <td class='hide'></td>
+                </tr>`;
+            });
+            $('#table_modal > tbody').html(rows);       // set new table rows to table body (tbody) of popup
+
+            $('#model_header_1').text('Product Code');      // set header of popup
+            $('#model_header_2').text('Product Name');
+            $('#model_header_3').text('Unit Price');
+
+            
+            $('#txt_modal_param').val('product_code');      // mark product_code for check after close modal
+            $('#modal_form').modal();                       // open popup
+        },
+    });
+});
+
+    // /* search type */
+    // $('.search_type').click(function () {
     //     $.ajax({
-    //         url:  '/menu/list',
+    //         url:  '/type/list',
     //         type:  'get',
     //         dataType:  'json',
     //         success: function  (data) {
     //             let rows =  '';
     //             var i = 1;
-    //             data.menus.forEach(menu => {
+    //             data.customers.forEach(customer => {
     //                 rows += `
     //                 <tr class="d-flex">
     //                     <td class='col-1'>${i++}</td>
-    //                     <td class='col-3'><a class='a_click' href='#'>${menu.menu_code}</a></td>
-    //                     <td class='col-5'>${menu.name}</td>
+    //                     <td class='col-3'><a class='a_click' href='#'>${customer.customer_id}</a></td>
+    //                     <td class='col-5'></td>
     //                     <td class='col-3'></td>
     //                     <td class='hide'></td>
     //                 </tr>`;
     //             });
     //             $('#table_modal > tbody').html(rows);
 
-    //             $('#model_header_1').text('Menu Code');
-    //             $('#model_header_2').text('Menu Name');
+    //             $('#model_header_1').text('Customer ID');
+    //             $('#model_header_2').text('Customer Name');
     //             $('#model_header_3').text('Note');
+
     //         },
-    //     });
+    //     });        
     //     // open popup
-    //     $('#txt_modal_param').val('menu_code');
+    //     $('#txt_modal_param').val('customer_id');
     //     $('#modal_form').modal();
     // });
 
-    /* search type */
-    $('.search_type').click(function () {
+    /* search sweet level */
+    $('.search_sweet_level').click(function () {
         $.ajax({
-            url:  '/type/list',
+            url:  '/sweet/list',
             type:  'get',
             dataType:  'json',
             success: function  (data) {
                 let rows =  '';
                 var i = 1;
-                data.customers.forEach(customer => {
+                data.sweets.forEach(Sweet => {
                     rows += `
                     <tr class="d-flex">
                         <td class='col-1'>${i++}</td>
-                        <td class='col-3'><a class='a_click' href='#'>${customer.customer_id}</a></td>
+                        <td class='col-3'><a class='a_click' href='#'>${sweet.sweet_level}</a></td>
                         <td class='col-5'></td>
                         <td class='col-3'></td>
                         <td class='hide'></td>
@@ -199,14 +231,14 @@ $(document).ready( function () {
                 });
                 $('#table_modal > tbody').html(rows);
 
-                $('#model_header_1').text('Customer ID');
+                $('#model_header_1').text('Sweet Level');
                 $('#model_header_2').text('Customer Name');
                 $('#model_header_3').text('Note');
 
             },
         });        
         // open popup
-        $('#txt_modal_param').val('customer_id');
+        $('#txt_modal_param').val('sweet_level');
         $('#modal_form').modal();
     });
 

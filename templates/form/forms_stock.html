@@ -1,0 +1,126 @@
+{% extends 'form/base_form.html' %}
+
+{% block content %}
+    
+    <form id='form_get' action='/stock/get' method=GET>
+        <label>Stock ID</label>
+        <input type=text name='id_stock' value=''>
+        <input type=submit value='GET'class="btn btn-dark ">
+    </form>
+
+    <button id='btnStockList'class="btn btn-dark ">Stock List</button>
+
+    <form id='form_stcok' action='/stock/save' method=POST>
+        {% csrf_token %}
+        <table id='StockList' class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Stcok ID</th>
+                    <th>Stock Date</th>
+                    <th>Stock Name</th>
+                    <th>Amount</th>
+                    <th>Cost</th>
+                    <th>Total_amount</th>
+                    <th>Total price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for list in stocks %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ list.id_stock }}</td>
+                        <td>{{ list.date_stock }}</td>
+                        <td>{{ list.stock_name}}</td>
+                        <td>{{ list.amount}}</td>
+                        <td>{{ list.cost}}</td>
+                        <td>{{ list.total_amount}}</td>
+                        <td>{{ list.total_price}}</td>
+                        <td></td>
+                    <tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td id='btnAddStock' class='btn'> + </td>
+                    <td><input type='text' id='id_stock' name='id_stock' /></td>
+                    <td><input type='text' id='date_stock' name='date_stock' /></td>
+                    <td><input type='text' id='stock_name' name='stock_name' /></td>
+                    <td><input type='text' id='amount' name='amount' /></td>
+                    <td><input type='text' id='cost' name='cost' /></td>
+                    <td><input type='text' id='total_amount' name='total_amount' /></td>
+                    <td><input type='text' id='total_price' name='total_price' /></td>
+                    <td><input type='submit' value='Add'class="btn btn-dark "></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>    
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready( function () {
+        $('#btnStockList').click(function() {
+            console.log('btnStockList');
+            $.ajax({
+                url:  '/stock/list',
+                type:  'get',
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.stocks.forEach(stock => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${stock.id_stock}</td>
+                            <td class='col-3'>${stock.date_stock}</td>
+                            <td class='col-3'>${stock.stock_name}</td>
+                            <td class='col-3'>${stock.amount}</td>
+                            <td class='col-3'>${stock.cost}</td>
+                            <td class='col-3'>${stock.total_amount}</td>
+                            <td class='col-3'>${stock.total_price}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#StockList > tbody').html(rows);
+                },
+            });        
+        });
+
+        $('#btnAddStock').click(function() {
+            console.log('btnAddStock');
+            var token = $('[name=csrfmiddlewaretoken]').val();
+            $.ajax({
+                url:  '/stock/save2',
+                type:  'post',
+                data: $('#form_stock').serialize(),
+                headers: { "X-CSRFToken": token },
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.stocks.forEach(stock => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${stock.id_stock}</td>
+                            <td class='col-3'>${stock.date_stock}</td>
+                            <td class='col-3'>${stock.stock_name}</td>
+                            <td class='col-3'>${stock.amount}</td>
+                            <td class='col-3'>${stock.cost}</td>
+                            <td class='col-3'>${stock.total_amount}</td>
+                            <td class='col-3'>${stock.total_price}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#StockList > tbody').html(rows);
+                },
+            });   
+        });
+    });
+</script>
+{% endblock %}
+</body>
+</html>

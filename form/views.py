@@ -37,7 +37,7 @@ class CustomerList(View):
 
 class CustomerGet(View):
     def get(self, request, customer_id):
-        customers = list(Customer.objects.filter(customer_id=customer_id).values())
+        customers = list(Customer.objects.filter(id_user=id_user).values())
         data = dict()
         data['customers'] = customers
         response = JsonResponse(data)
@@ -165,41 +165,41 @@ class MenuSave2(View):
         return response
         #return render(request, 'forms_customer.html', data)
 
-############################# PROMOTION ##############################
+############################# Stock ##############################
 
 # Create your views here.
-def promotion(request):
-    promotion_code = request.GET.get('promotion_code','')
-    promotions = list(Promotion.objects.filter(promotion_code = promotion_code).values())
+def stock(request):
+    id_stock = request.GET.get('id_stock','')
+    stocks = list(Stock.objects.filter(id_stock = id_stock).values())
     data = dict()
-    data['promotions'] = promotions
+    data['stocks'] = stocks
     
-    return render(request, 'form/forms_promotion.html', data)
+    return render(request, 'form/forms_stock.html', data)
 
-class PromotionList(View):
+class StockList(View):
     def get(self, request):
-        promotions = list(Promotion.objects.all().values())
+        stocks = list(Stock.objects.all().values())
         data = dict()
-        data['promotions'] = promotions
+        data['stocks'] = stocks
         response = JsonResponse(data)
         response["Access-Control-Allow-Origin"] = "*"
         return response
 
-class PromotionGet(View):
-    def get(self, request, promotion_code):
-        promotions = list(Promotion.objects.filter(promotion_code = promotion_code).values())
+class StockGet(View):
+    def get(self, request, id_stock):
+        stocks = list(Stock.objects.filter(id_stock = id_stock).values())
         data = dict()
-        data['promotions'] = promotions
+        data['stocks'] = stocks
         response = JsonResponse(data)
         response["Access-Control-Allow-Origin"] = "*"
         return response        
 
 @method_decorator(csrf_exempt, name='dispatch')
-class PromotionSave(View):
+class StockSave(View):
     def post(self, request):
         request.POST = request.POST.copy()
 
-        form = PromotionForm(request.POST)
+        form = StockForm(request.POST)
         if form.is_valid():
             form.save()
         else:
@@ -207,108 +207,34 @@ class PromotionSave(View):
             ret['result'] = "error"
             return JsonResponse(ret)
 
-        promotions = list(Promotion.objects.all().values())
+        stocks = list(Stock.objects.all().values())
         data = dict()
-        data['promotions'] = promotions
+        data['stocks'] = stocks
         
-        return render(request, 'form/forms_promotion.html', data)
+        return render(request, 'form/forms_stock.html', data)
 
-class PromotionForm(forms.ModelForm):
+class StockForm(forms.ModelForm):
     class Meta:
-        model = Promotion
+        model = Stock
         fields = '__all__'
 
 @method_decorator(csrf_exempt, name='dispatch')
-class PromotionSave2(View):
+class StockSave2(View):
     def post(self, request):
         request.POST = request.POST.copy()
 
-        form = PromotionForm(request.POST)
+        form = StockForm(request.POST)
         if form.is_valid():
             form.save()
         else:
             ret = dict()
             ret['result'] = "error"
-            ret['promotions'] = list()
+            ret['stocks'] = list()
             return JsonResponse(ret)
 
-        promotions = list(Promotion.objects.all().values())
+        stocks = list(Stock.objects.all().values())
         data = dict()
-        data['promotions'] = promotions
-        response = JsonResponse(data)
-        response["Access-Control-Allow-Origin"] = "*"
-        return response
-        #return render(request, 'forms_customer.html', data)
-
-########################## EMPLOYEE ############################
-# Create your views here.
-def employee(request):
-    employee_id = request.GET.get('employee_id','')
-    employees = list(Employee.objects.filter(employee_id = employee_id).values())
-    data = dict()
-    data['employees'] = employees
-    
-    return render(request, 'form/forms_employee.html', data)
-
-class EmployeeList(View):
-    def get(self, request):
-        employees = list(Employee.objects.all().values())
-        data = dict()
-        data['employees'] = employees
-        response = JsonResponse(data)
-        response["Access-Control-Allow-Origin"] = "*"
-        return response
-
-class EmployeeGet(View):
-    def get(self, request, employee_id):
-        employees = list(Employee.objects.filter(employee_id = employee_id).values())
-        data = dict()
-        data['employees'] = employees
-        response = JsonResponse(data)
-        response["Access-Control-Allow-Origin"] = "*"
-        return response        
-
-@method_decorator(csrf_exempt, name='dispatch')
-class EmployeeSave(View):
-    def post(self, request):
-        request.POST = request.POST.copy()
-
-        form = EmployeeForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            ret = dict()
-            ret['result'] = "error"
-            return JsonResponse(ret)
-
-        employees = list(Employee.objects.all().values())
-        data = dict()
-        data['employees'] = employees
-        
-        return render(request, 'form/forms_employee.html', data)
-
-class EmployeeForm(forms.ModelForm):
-    class Meta:
-        model = Employee
-        fields = '__all__'
-
-@method_decorator(csrf_exempt, name='dispatch')
-class EmployeeSave2(View):
-    def post(self, request):
-        request.POST = request.POST.copy()
-
-        form = EmployeeForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            ret = dict()
-            ret['result'] = "error"
-            ret['employees'] = list()
-            return JsonResponse(ret)
-
-        employees = list(Employee.objects.all().values())
-        data = dict()
-        data['employees'] = employees
+        data['stocks'] = stocks
         response = JsonResponse(data)
         response["Access-Control-Allow-Origin"] = "*"
         return response

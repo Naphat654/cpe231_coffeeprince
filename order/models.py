@@ -9,9 +9,8 @@ class Customer(models.Model):
     id_user = models.CharField(max_length=10, primary_key=True)
     username = models.CharField(max_length=50, null=True)
     email = models.CharField(max_length=100, null=True, blank=True)
-    phone_number = models.CharField(max_length=100, null=True, blank=True)
     password = models.CharField(max_length=100, null=True, blank=True)
-    point = models.CharField(max_length=100, null=True, blank=True)
+    # point = models.CharField(max_length=100, null=True, blank=True)
     class Meta:
         db_table = "customer"
         managed = False

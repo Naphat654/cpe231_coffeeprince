@@ -9,9 +9,8 @@ class Customer(models.Model):
     id_user = models.CharField(max_length=10, primary_key=True)
     username = models.CharField(max_length=50, null=True)
     email = models.CharField(max_length=100, null=True, blank=True)
-    phone_number = models.CharField(max_length=100, null=True, blank=True)
     password = models.CharField(max_length=100, null=True, blank=True)
-    point = models.CharField(max_length=100, null=True, blank=True)
+    # point = models.CharField(max_length=100, null=True, blank=True)
     class Meta:
         db_table = "customer"
         managed = False
@@ -56,14 +55,15 @@ class Stock(models.Model):
         return self.id_stock
     
 class Ingredient(models.Model):
+    ingredient_id = models.CharField(max_length=10, primary_key=True)
+    menu_id = models.ForeignKey(Menu, on_delete=models.CASCADE, db_column='menu_id')
     id_stock = models.ForeignKey(Stock, on_delete=models.CASCADE, db_column='id_stock')
-    ingredient = models.CharField(max_length=100)
-    remain = models.IntegerField(null=True)
+    amount = models.IntegerField(null=True)
     class Meta:
         db_table = "ingredient"
         managed = False
     def __str__(self):
-        return self.id_stock
+        return self.ingredient_id
 
 class AdditionalItems(models.Model):
     type = models.CharField(max_length=10, primary_key=True)

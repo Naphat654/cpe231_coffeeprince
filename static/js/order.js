@@ -89,9 +89,11 @@ $(document).ready( function () {
             success: function  (data) {
                 $('#txt_Menu').val(data.menu.menu_id);
                 $('#txt_MenuName').val(data.menu.menu_name);
+                $('#txt_MenuPrice').val(data.menu.price);
             },
             error: function (xhr, status, error) {
                 $('#txt_MenuName').val('');
+                $('#txt_MenuPrice').val('');
             }
         });
     });
@@ -134,6 +136,7 @@ $('.search_product_code').click(function () {
 
     /* search additional items */
     $('.search_additional_items').click(function () {
+        $(this).parents('tr').find('.additional_items_1').html('*');
         $.ajax({
             url:  '/additional_items/list',
             type:  'get',
@@ -141,11 +144,11 @@ $('.search_product_code').click(function () {
             success: function  (data) {
                 let rows =  '';
                 var i = 1;
-                data.additional_items.forEach(additional_items => {
+                data.additionalitems.forEach(additionalitem => {
                     rows += `
                     <tr class="d-flex">
                         <td class='col-1'>${i++}</td>
-                        <td class='col-3'><a class='a_click' href='#'>${additional_items.type}</a></td>
+                        <td class='col-3'><a class='a_click' href='#'>${additionalitem.type}</a></td>
                         <td class='col-5'></td>
                         <td class='col-3'></td>
                         <td class='hide'></td>
@@ -166,6 +169,7 @@ $('.search_product_code').click(function () {
 
     /* search sweet level */
     $('.search_sweet_level').click(function () {
+        $(this).parents('tr').find('.sweet_1').html('*');
         $.ajax({
             url:  '/sweet/list',
             type:  'get',
@@ -198,6 +202,8 @@ $('.search_product_code').click(function () {
 
         /* search menu code  */
     $('.search_menu_id').click(function () {
+        $(this).parents('tr').find('.order_no').html('*');
+        
         $.ajax({
             url:  '/menu/list',
             type:  'get',
@@ -294,8 +300,6 @@ $('.search_product_code').click(function () {
     //     $('#txt_modal_param').val('additional_items');
     //     $('#modal_form').modal();
     // });
-
-
 
     $('.search_id_user').click(function () {
         $.ajax({
@@ -466,9 +470,6 @@ $('.search_product_code').click(function () {
         } else if ($('#txt_modal_param').val() == 'id_user') {
             $('#txt_IdUser').val(code);
             $('#txt_Username').val(name);
-        } else if ($('#txt_modal_param').val() == 'promotion_code') {
-            $('#txt_PromotionCode').val(code);
-            $('#txt_Discount').val(name);
         } else if ($('#txt_modal_param').val() == 'payment_method') {
             $('#txt_PaymentMethod').val(code);
             $('#txt_Description').val(name);
@@ -483,12 +484,9 @@ $('.search_product_code').click(function () {
             $('#txt_OrderDate').val(name);
             $('#txt_IdUser').val(note);
             $('#txt_IdUser').change();
-            $('#txt_PromotionCode').val(pro);
-            $('#txt_PromotionCode').change();
             $('#txt_PaymentMethod').val(pay);
-            $('#txt_PaymentMethod').change();
-            $('#txt_EmployeeID').val(em);
-            $('#txt_EmployeeID').change();   
+            $('#txt_PaymentMethod').change();   
+            
             get_order_detail(code);
         }
 
@@ -529,9 +527,7 @@ $('.search_product_code').click(function () {
                         <td class='col-3'><a class='a_click' href='#'>${order.order_no}</a></td>
                         <td class='col-5'>${order_date}</td>
                         <td class='col-3'>${order.id_user_id}</td>
-                        <td class='hide'>${order.promotion_code_id}</td>
                         <td class='hide'>${order.payment_method_id}</td>
-                        <td class='hide'>${order.employee_id_id}</td>
                         <td class='hide'></td>
                     </tr>`;
                 });

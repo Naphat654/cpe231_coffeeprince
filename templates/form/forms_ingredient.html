@@ -1,0 +1,112 @@
+{% extends 'form/base_form.html' %}
+
+{% block content %}
+    
+    <form id='form_get' action='/ingredient/get' method=GET>
+        <label>Ingredient ID</label>
+        <input type=text name='ingredient_id' value=''>
+        <input type=submit value='GET'class="btn btn-dark ">
+    </form>
+
+    <button id='btnIngredientList'class="btn btn-dark ">Ingredient List</button>
+
+    <form id='form_ingredient' action='/ingredient/save' method=POST>
+        {% csrf_token %}
+        <table id='IngredientList' class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Ingredient ID</th>
+                    <th>Menu ID</th>
+                    <th>ID stock</th>
+                    <th>Amount</th>
+                    <th></th>
+                </tr>
+                
+            </thead>
+            <tbody>
+                {% for list in employees %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ list.ingredient_id }}</td>
+                        <td>{{ list.menu_id }}</td>
+                        <td>{{ list.id_stock }}</td>
+                        <td>{{ list.amount }}</td>
+                        <td></td>
+                    <tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td id='btnAddIngredient' class='btn'> + </td>
+                    <td><input type='text' id='ingredient_id' name='ingredient_id' /></td>
+                    <td><input type='text' id='menu_id' name='menu_id' /></td>
+                    <td><input type='text' id='id_stock' name='id_stock' /></td>
+                    <td><input type='text' id='amount' name='amount' /></td>
+                    <td><input type='submit' value='Add'class="btn btn-dark "></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>    
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready( function () {
+        $('#btnIngredientList').click(function() {
+            console.log('btnIngredientList');
+            $.ajax({
+                url:  '/ingredient/list',
+                type:  'get',
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.ingredients.forEach(ingredient => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${employee.ingredient_id}</td>
+                            <td class='col-3'>${employee.menu_id}</td>
+                            <td class='col-3'>${employee.id_stock}</td>
+                            <td class='col-3'>${employee.amount}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#IngredientList > tbody').html(rows);
+                },
+            });        
+        });
+
+        $('#btnAddIngredient').click(function() {
+            console.log('btnAddIngredient');
+            var token = $('[name=csrfmiddlewaretoken]').val();
+            $.ajax({
+                url:  '/ingredient/save2',
+                type:  'post',
+                data: $('#form_ingredient').serialize(),
+                headers: { "X-CSRFToken": token },
+                dataType:  'json',
+                success: function  (data) {
+                    let rows =  '';
+                    var i = 1;
+                    data.ingredients.forEach(ingredient => {
+                        rows += `
+                        <tr>
+                            <td class='col-1'>${i++}</td>
+                            <td class='col-2'>${employee.employee_id}</td>
+                            <td class='col-3'>${employee.menu_id}</td>
+                            <td class='col-3'>${employee.id_stock}</td>
+                            <td class='col-3'>${employee.amount}</td>
+                            <td class='hide'></td>
+                        </tr>`;
+                    });
+                    $('#IngredientList > tbody').html(rows);
+                },
+            });   
+        });
+    });
+</script>
+{% endblock %}
+</body>
+</html>

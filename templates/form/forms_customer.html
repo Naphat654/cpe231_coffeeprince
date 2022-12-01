@@ -19,9 +19,9 @@
                     <th>Customer ID</th>
                     <th>Username</th>
                     <th>Email</th>
-                    <th>Phone number</th>
+
                     <th>Password</th>
-                    <th>Point</th>
+
                     <th></th>
                 </tr>
             </thead>
@@ -32,9 +32,9 @@
                         <td>{{ list.id_user }}</td>
                         <td>{{ list.username }}</td>
                         <td>{{ list.email }}</td>
-                        <td>{{ list.phone_number }}</td>
+           
                         <td>{{ list.password }}</td>
-                        <td>{{ list.point }}</td>
+                 
                         <td></td>
                     <tr>
                 {% endfor %}
@@ -45,9 +45,9 @@
                     <td><input type='text' id='customer_id' name='id_user' /></td>
                     <td><input type='text' id='customer_name' name='username' /></td>
                     <td><input type='text' id='customer_mail' name='email' /></td>
-                    <td><input type='text' id='customer_phone' name='phone_number' /></td>
+           
                     <td><input type='text' id='customer_pass' name='password' /></td>
-                    <td><input type='text' id='customer_point' name='point' /></td>
+                 
                     <td><input type='submit' value='Add'class="btn btn-dark "></td>
                 </tr>
             </tfoot>
@@ -74,9 +74,9 @@
                             <td class='col-2'>${customer.id_user}</td>
                             <td class='col-3'>${customer.username}</td>
                             <td class='col-4'>${customer.email}</td>
-                            <td class='col-5'>${customer.phone_number}</td>
+                            
                             <td class='col-6'>${customer.password}</td>
-                            <td class='col-7'>${customer.point}</td>
+                        
                             <td class='hide'></td>
                         </tr>`;
                     });
@@ -104,9 +104,9 @@
                             <td class='col-2'>${customer.id_user}</td>
                             <td class='col-3'>${customer.username}</td>
                             <td class='col-4'>${customer.email}</td>
-                            <td class='col-5'>${customer.phone_number}</td>
+                        
                             <td class='col-6'>${customer.password}</td>
-                            <td class='col-6'>${customer.point}</td>
+                         
                             <td class='hide'></td>
                         </tr>`;
                     });

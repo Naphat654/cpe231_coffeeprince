@@ -136,7 +136,7 @@ $('.search_product_code').click(function () {
 
     /* search additional items */
     $('.search_additional_items').click(function () {
-        // $(this).parents('tr').find('.sweet_1').html('*');
+        $(this).parents('tr').find('.additional_items_1').html('*');
         $.ajax({
             url:  '/additional_items/list',
             type:  'get',
@@ -169,7 +169,7 @@ $('.search_product_code').click(function () {
 
     /* search sweet level */
     $('.search_sweet_level').click(function () {
-        // $(this).parents('tr').find('.sweet_1').html('*');
+        $(this).parents('tr').find('.sweet_1').html('*');
         $.ajax({
             url:  '/sweet/list',
             type:  'get',
@@ -203,6 +203,7 @@ $('.search_product_code').click(function () {
         /* search menu code  */
     $('.search_menu_id').click(function () {
         $(this).parents('tr').find('.order_no').html('*');
+        
         $.ajax({
             url:  '/menu/list',
             type:  'get',

@@ -54,7 +54,7 @@
     {% for lineitem in orderlineitem %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ lineitem.menu_code }}</td>
+            <td>{{ lineitem.menu_id }}</td>
             <td align='left'>{{ lineitem.unit_price }}</td>
             <td align='left'>{{ lineitem.quantity }}</td>
             <td align='left'>{{ lineitem.product_total }}</td>
@@ -62,15 +62,15 @@
     {% endfor %}
         <tr>
             <td colspan='3'></td>
-            <td align='right'>Rebate</td><td align='left'>{{ order.rebate }}</td>
+            <td align='right'>Discount</td><td align='left'>{{ order.received }}</td>
         </tr>
         <tr>
             <td colspan='3'></td>
-            <td align='right'>Total Price</td><td align='left'>{{ order.total }}</td>
+            <td align='right'>Total Price</td><td align='left'>{{ order.total_price }}</td>
         </tr>
         <tr>
             <td colspan='3'></td>
-            <td align='right'>Remain</td><td align='left'>{{ order.remain }}</td>
+            <td align='right'>Remain</td><td align='left'>{{ order.change }}</td>
         </tr>
     </table>
 </div>

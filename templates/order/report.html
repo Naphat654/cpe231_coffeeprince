@@ -27,12 +27,9 @@
             <td>{{ lineitem.customer_id }}</td>
             <td>{{ lineitem.customer_name }}</td>
             <td>{{ lineitem.total|intcomma }}</td>
-            <td>{{ lineitem.promotion_code }}</td>
             <td>{{ lineitem.payment_method }}</td>
-            <td>{{ lineitem.employee_id }}</td>
-            <td>{{ lineitem.rebate }}</td>
+            <td>{{ lineitem.discount }}</td>
             <td>{{ lineitem.remain }}</td>
-
         <tr>
     {% endfor %}
         </tbody>

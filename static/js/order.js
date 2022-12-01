@@ -200,6 +200,7 @@ $('.search_product_code').click(function () {
 
         /* search menu code  */
     $('.search_menu_id').click(function () {
+        $(this).parents('tr').find('.order_no').html('*');
         $.ajax({
             url:  '/menu/list',
             type:  'get',

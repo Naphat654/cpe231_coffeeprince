@@ -136,6 +136,7 @@ $('.search_product_code').click(function () {
 
     /* search additional items */
     $('.search_additional_items').click(function () {
+        // $(this).parents('tr').find('.sweet_1').html('*');
         $.ajax({
             url:  '/additional_items/list',
             type:  'get',
@@ -168,6 +169,7 @@ $('.search_product_code').click(function () {
 
     /* search sweet level */
     $('.search_sweet_level').click(function () {
+        // $(this).parents('tr').find('.sweet_1').html('*');
         $.ajax({
             url:  '/sweet/list',
             type:  'get',

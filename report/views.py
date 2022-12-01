@@ -33,8 +33,13 @@ def CursorToDict(data,columns):
 def reFormatDateMMDDYYYY(ddmmyyyy):
         if (ddmmyyyy == ''):
             return ''
-        return ddmmyyyy[0:4] + "/" + ddmmyyyy[5:7] + "/" + ddmmyyyy[8:10]
-    
+        return ddmmyyyy[3:5] + "/" + ddmmyyyy[:2] + "/" + ddmmyyyy[6:]
+
+def reFormatNumber(str):
+        if (str == ''):
+            return ''
+        return str.replace(",", "")
+        
 def report(request):
     date1 = request.GET.get('date1','')
     date1 = reFormatDateMMDDYYYY(date1)

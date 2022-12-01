@@ -165,82 +165,82 @@ class StockSave2(View):
         return response
         #return render(request, 'forms_customer.html', data)
 
-# ############################# INGREDIENT ##############################
+############################# INGREDIENT ##############################
 
-# # Create your views here.
-# def ingredient(request):
-#     id_stock = request.GET.get('id_stock','')
-#     ingredients = list(Ingredient.objects.filter(id_stock = id_stock).values())
-#     data = dict()
-#     data['ingredients'] = ingredients
+# Create your views here.
+def ingredient(request):
+    ingredient_id = request.GET.get('ingredient_id','')
+    ingredients = list(Ingredient.objects.filter(ingredient_id = ingredient_id).values())
+    data = dict()
+    data['ingredients'] = ingredients
     
-#     return render(request, 'form/forms_ingredient.html', data)
+    return render(request, 'form/forms_ingredient.html', data)
 
-# class IngredientList(View):
-#     def get(self, request):
-#         ingredients = list(Ingredient.objects.all().values())
-#         data = dict()
-#         data['ingredients'] = ingredients
-#         response = JsonResponse(data)
-#         response["Access-Control-Allow-Origin"] = "*"
-#         return response
+class IngredientList(View):
+    def get(self, request):
+        ingredients = list(Ingredient.objects.all().values())
+        data = dict()
+        data['ingredients'] = ingredients
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
 
-# class IngredientGet(View):
-#     def get(self, request, id_stock):
-#         ingredients = list(Ingredient.objects.filter(id_stock = id_stock).values())
-#         data = dict()
-#         data['ingredients'] = ingredients
-#         response = JsonResponse(data)
-#         response["Access-Control-Allow-Origin"] = "*"
-#         return response        
+class IngredientGet(View):
+    def get(self, request, ingredient_id):
+        ingredients = list(Ingredient.objects.filter(ingredient_id = ingredient_id).values())
+        data = dict()
+        data['ingredients'] = ingredients
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response        
 
-# @method_decorator(csrf_exempt, name='dispatch')
-# class IngredientSave(View):
-#     def post(self, request):
-#         request.POST = request.POST.copy()
+@method_decorator(csrf_exempt, name='dispatch')
+class IngredientSave(View):
+    def post(self, request):
+        request.POST = request.POST.copy()
 
-#         form = IngredientForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#         else:
-#             ret = dict()
-#             ret['result'] = "error"
-#             return JsonResponse(ret)
+        form = IngredientForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            ret = dict()
+            ret['result'] = "error"
+            return JsonResponse(ret)
 
-#         ingredients = list(Ingredient.objects.all().values())
-#         data = dict()
-#         data['ingredients'] = ingredients
+        ingredients = list(Ingredient.objects.all().values())
+        data = dict()
+        data['ingredients'] = ingredients
         
-#         return render(request, 'form/forms_ingredient.html', data)
+        return render(request, 'form/forms_ingredient.html', data)
 
-# class IngredientForm(forms.ModelForm):
-#     class Meta:
-#         model = Ingredient
-#         fields = '__all__'
+class IngredientForm(forms.ModelForm):
+    class Meta:
+        model = Ingredient
+        fields = '__all__'
 
-# @method_decorator(csrf_exempt, name='dispatch')
-# class IngredientSave2(View):
-#     def post(self, request):
-#         request.POST = request.POST.copy()
+@method_decorator(csrf_exempt, name='dispatch')
+class IngredientSave2(View):
+    def post(self, request):
+        request.POST = request.POST.copy()
 
-#         form = IngredientForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#         else:
-#             ret = dict()
-#             ret['result'] = "error"
-#             ret['ingredients'] = list()
-#             return JsonResponse(ret)
+        form = IngredientForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            ret = dict()
+            ret['result'] = "error"
+            ret['ingredients'] = list()
+            return JsonResponse(ret)
 
-#         ingredients = list(Ingredient.objects.all().values())
-#         data = dict()
-#         data['ingredients'] = ingredients
-#         response = JsonResponse(data)
-#         response["Access-Control-Allow-Origin"] = "*"
-#         return response
-#         #return render(request, 'forms_customer.html', data)
+        ingredients = list(Ingredient.objects.all().values())
+        data = dict()
+        data['ingredients'] = ingredients
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
+        #return render(request, 'forms_customer.html', data)
 
-############################ MENU ##############################
+########################### MENU ##############################
 
 # Create your views here.
 def menu(request):
@@ -533,3 +533,13 @@ class PaymentMethodSave2(View):
         response = JsonResponse(data)
         response["Access-Control-Allow-Origin"] = "*"
         return response
+
+def reFormatDateMMDDYYYY(ddmmyyyy):
+        if (ddmmyyyy == ''):
+            return ''
+        return ddmmyyyy[3:5] + "/" + ddmmyyyy[:2] + "/" + ddmmyyyy[6:]
+
+def reFormatNumber(str):
+        if (str == ''):
+            return ''
+        return str.replace(",", "")

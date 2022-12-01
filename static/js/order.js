@@ -486,6 +486,7 @@ $('.search_product_code').click(function () {
             $('#txt_IdUser').change();
             $('#txt_PaymentMethod').val(pay);
             $('#txt_PaymentMethod').change();   
+            
             get_order_detail(code);
         }
 

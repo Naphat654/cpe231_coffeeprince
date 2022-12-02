@@ -250,7 +250,7 @@ $('.search_product_code').click(function () {
                     // return selected product detail (code,name,units) to table row
                     $(this).find('.menu_id_1 > span').html(code);
                     $(this).find('.menu_name').html(name);
-                    $(this).find('.price').html(note);   // default quantiy is '1'
+                    $(this).find('.unit_price').html(note);   // default quantiy is '1'
                 }
             });
             

@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'report',
     'order',
-    'home',
     'form'
 ]
 

@@ -347,7 +347,6 @@ $('.search_product_code').click(function () {
                     <tr class="d-flex">
                         <td class='col-1'>${i++}</td>
                         <td class='col-3'><a class='a_click' href='#'>${promotion.promotion_code}</a></td>
-                        <td class='col-5'>${promotion.discount}</td>
                         <td class='col-3'></td>
                         <td class='hide'></td>
                     </tr>`;
@@ -355,7 +354,7 @@ $('.search_product_code').click(function () {
                 $('#table_modal > tbody').html(rows);
 
                 $('#model_header_1').text('Promotion');
-                $('#model_header_2').text('Discount');
+                // $('#model_header_2').text('Discount');
                 $('#model_header_3').text('Note');
 
             },
@@ -701,9 +700,9 @@ function re_calculate_total_price () {
     var discount = $('#txt_Discount').val();
     $('#lbl_TotalPrice').text(formatNumber(total_price));
     $('#txt_TotalPrice').val($('#lbl_TotalPrice').text());
-    $('#lbl_Discount').text(formatNumber(total_price*discount));
-    $('#txt_Discount').val($('#lbl_Discount').text());
-    $('#lbl_Remain').text(formatNumber(total_price*(1-discount)));
+    // $('#lbl_Discount').text(formatNumber(total_price*discount));
+    // $('#txt_Discount').val($('#lbl_Discount').text());
+    $('#lbl_Remain').text(formatNumber(total_price));
     $('#txt_Remain').val($('#lbl_Remain').text()); 
 }
 
@@ -719,14 +718,12 @@ function reset_form() {
     $('#txt_IdUser').val('0000000000');
     $('#txt_Username').val('Unknown');
     $('#txt_PromotionCode').val('NoPromotion');
-    $('#txt_Discount').val('0.00');
     $('#txt_PaymentMethod').val('');
     $('#txt_Description').val('');
     // $('#txt_EmployeeID').val('');
     // $('#txt_EmployeeName').val('');
 
     $('#lbl_TotalPrice').text('0.00');
-    $('#lbl_Discount').text('0.00');
     $('#lbl_Remain').text('0.00');
 }
 

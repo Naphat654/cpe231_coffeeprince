@@ -305,7 +305,7 @@ class OrdersReport(View):
         order_no = pk + "/" + pk2
         orders = list(Orders.objects.filter(order_no=order_no)
             .values('order_no', 'id_user', 'date'
-            , 'total_price', 'payment_method', 'received', 'change'))
+            , 'total_price', 'payment_medthod', 'received', 'change'))
         orderslineitem = list(OrderLineItemForm.objects.select_related('menu_id')
             .filter(invoice_no=order_no)
             .values('order_no', 'menu_id', 'type', 'sweet_level', 'amount'))

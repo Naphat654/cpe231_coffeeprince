@@ -527,7 +527,6 @@ $('.search_product_code').click(function () {
                         <td class='col-3'><a class='a_click' href='#'>${order.order_no}</a></td>
                         <td class='col-5'>${order.date}</td>
                         <td class='col-3'>${order.id_user}</td>
-                        <td class='hide'>${order.payment_method_id}</td>
                         <td class='hide'></td>
                     </tr>`;
                 });
@@ -608,7 +607,8 @@ $('.search_product_code').click(function () {
             console.log('Delete ' + $('#txt_OrderNo').val());
             var token = $('[name=csrfmiddlewaretoken]').val();
             $.ajax({
-                url:  '/order/delete/' + $('#txt_OrderNo').val(),
+                url:  '/order/delete/' ,
+                data: 'order_no=' + $('#txt_OrderNo').val(),
                 type:  'post',
                 headers: { "X-CSRFToken": token },
                 dataType:  'json',

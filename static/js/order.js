@@ -250,7 +250,8 @@ $('.search_product_code').click(function () {
                     // return selected product detail (code,name,units) to table row
                     $(this).find('.menu_id_1 > span').html(code);
                     $(this).find('.menu_name').html(name);
-                    $(this).find('.unit_price').html(note);   // default quantiy is '1'
+                    $(this).find('.unit_price').html(note); 
+                    $(this).find('.quantity').html("1");      // default quantiy is '1'
                 }
             });
             
@@ -670,7 +671,7 @@ function get_order_detail (order_no) {
                     $(this).find('.menu_code_1 > span').html(data.menu[i].menu_id);
                     $(this).find('.name').html(data.menu[i].menu_name);
                     $(this).find('.unit_price').html(data.menu[i].price);
-                    $(this).find('.quantity').html(data.orderlineitem[i].quantity);
+                    $(this).find('.quantity').html(data.menu[i].quantity);
                 }
                 i++;
             });
@@ -685,12 +686,14 @@ function re_calculate_total_price () {
 
         var menu_id = $(this).find('.menu_code_1 > span').html();
         //console.log (product_code);
-        var unit_price = $(this).find('.unit_price').html();
-        $(this).find('.unit_price').html(((unit_price)));
-        var quantity = $(this).find('.quantity').html();
-        $(this).find('.quantity').html(parseInt(quantity));
+        
         if (menu_id != '') {
-                var product_total = unit_price * quantity
+            var unit_price = $(this).find('.unit_price').html();
+            $(this).find('.unit_price').html(((unit_price)));
+            var quantity = $(this).find('.quantity').html();
+            $(this).find('.quantity').html(parseInt(quantity));
+        
+            var product_total = unit_price * quantity
             $(this).find('.product_total').html(formatNumber(product_total));
             total_price += product_total;
         }

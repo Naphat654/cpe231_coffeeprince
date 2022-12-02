@@ -70,5 +70,12 @@ urlpatterns = [
     path('paymentmethod/get/<payment_method>', form_views.PaymentMethodGet.as_view(), name='payment_method_get'), 
     path('paymentmethod/save', form_views.PaymentMethodSave.as_view(), name='payment_method_save'),   
     path('paymentmethod/save2', form_views.PaymentMethodSave2.as_view(), name='payment_method_save2'),
-    
+
+    path('order/list', order_views.OrdersList.as_view(), name='order_list'),
+    path('invoice/detail/<str:pk>/<str:pk2>', order_views.OrdersDetail.as_view(), name='order_detail'),
+    path('invoice/create', order_views.OrdersCreate.as_view(), name='order_create'),
+    path('invoice/update', order_views.OrdersUpdate.as_view(), name='order_update'),
+    path('invoice/delete', order_views.OrdersDelete.as_view(), name='order_delete'),
+    path('invoice/report/<str:pk>/<str:pk2>', order_views.OrdersReport.as_view(), name='order_report'),
+  
 ]

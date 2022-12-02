@@ -133,6 +133,33 @@ class AdditionalItemsDetail(View):
         return response
 
 #------------------------------------------------------------------------------#
+class OrdersList(View):
+    def get(self, request):
+        orders = list(Orders.objects.order_by('order_no').all().values())
+        data = dict()
+        data['orders'] = orders
+
+        return JsonResponse(data)
+
+class OrdersDetail(View):
+    def get(self, request, pk, pk2):
+
+        order_no = pk + '/' + pk2
+
+        order = list(Orders.objects.select_related('id_user')
+            .filter(order_no=order_no)
+            .values('order_no', 'id_user', 'date', 'total_price', 'payment_method'
+            , 'received', 'change'))
+        orderlineitem = list(OrderLineItem.objects.select_related('menu_id')
+            .filter(order_no=order_no)
+            .values('order_no', 'menu_id', 'type', 'sweet_level', 'amount'
+            , ))
+
+        data = dict()
+        data['order'] = order
+        data['orderlineitem'] = orderlineitem
+
+        return JsonResponse(data)
 
 class OrdersForm(forms.ModelForm):
     class Meta:

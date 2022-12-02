@@ -19,9 +19,9 @@ from django.contrib.auth.decorators import login_required
 
 from report import views as report_views
 from order import views as order_views
-from home import views as home_views
+# from home import views as home_views
 from form import views as form_views
-from login import views as login_views
+# from login import views as login_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,7 +29,7 @@ urlpatterns = [
 
     path('report/report', report_views.report),
     path('menu/list', order_views.MenuList.as_view(), name='menu_list'),
-    path('stock/list', order_views.StockList.as_view(), name='stock_list'),
+    path('stock/list', order_views.StockList.as_view(), name='stock_list'),       
     path('customer/list', order_views.CustomerList.as_view(), name='customer_list'),
     path('customer/detail/<pk>', order_views.CustomerDetail.as_view(), name='customer_detail'),
     path('paymentmethod/list', order_views.PaymentMethodList.as_view(), name='payment_method_list'),
@@ -38,16 +38,11 @@ urlpatterns = [
     path('sweet/detail/<pk>', order_views.SweetDetail.as_view(), name='payment_method_detail'),
     path('additional_items/list', order_views.AdditionalItemsList.as_view(), name='payment_method_list'),
     path('additional_items/detail/<pk>', order_views.AdditionalItemsDetail.as_view(), name='payment_method_detail'),
-    
-    path('home', home_views.index, name='index'),
-    path('Home', home_views.Home),
-    path('RecommendedMenu', home_views.recommended_menu),
-    path('Stock', home_views.stock),
 
     path('form', form_views.index, name='index'),
     path('customer', form_views.customer),
     path('form/Menu', form_views.menu),
-    path('form/Stock', form_views.stock),
+    path('form/Stock', form_views.stock),                                                   
     path('form/PaymentMethod', form_views.paymentmethod),
     
     path('customer/get', form_views.customer),
@@ -72,10 +67,9 @@ urlpatterns = [
     path('paymentmethod/save2', form_views.PaymentMethodSave2.as_view(), name='payment_method_save2'),
 
     path('order/list', order_views.OrdersList.as_view(), name='order_list'),
-    path('invoice/detail/<str:pk>/<str:pk2>', order_views.OrdersDetail.as_view(), name='order_detail'),
-    path('invoice/create', order_views.OrdersCreate.as_view(), name='order_create'),
-    path('invoice/update', order_views.OrdersUpdate.as_view(), name='order_update'),
-    path('invoice/delete', order_views.OrdersDelete.as_view(), name='order_delete'),
-    path('invoice/report/<str:pk>/<str:pk2>', order_views.OrdersReport.as_view(), name='order_report'),
-  
+    path('order/detail/<str:pk>/<str:pk2>', order_views.OrdersDetail.as_view(), name='order_detail'),
+    path('order/create', order_views.OrdersCreate.as_view(), name='order_create'),
+    path('order/update', order_views.OrdersUpdate.as_view(), name='order_update'),
+    path('order/delete', order_views.OrdersDelete.as_view(), name='order_delete'),
+    path('order/report/<str:pk>/<str:pk2>', order_views.OrdersReport.as_view(), name='order_report'),
 ]

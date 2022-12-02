@@ -7,9 +7,9 @@
         <input type=text name='menu_id' value=''>
         <input type=submit value='GET'class="btn btn-dark ">
     </form>
-
-    <button id='btnMenuList'class="btn btn-dark ">Menu List</button>
-
+    <label>
+        <button id='btnMenuList'class="btn btn-dark ">Menu List</button>
+    </label>
     <form id='form_menu' action='/menu/save' method=POST>
         {% csrf_token %}
         <table id='MenuList' class="table">

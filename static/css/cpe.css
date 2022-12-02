@@ -8,6 +8,10 @@ ul {
   background-color: rgb(73, 60, 31);
 }
 
+label {
+  margin-left: 25px;
+}
+
 li {
   float: left;
   list-style-type: none;

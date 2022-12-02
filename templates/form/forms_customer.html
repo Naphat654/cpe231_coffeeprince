@@ -7,9 +7,9 @@
         <input type=text name='id_user' value=''>
         <input type=submit value='GET'class="btn btn-dark ">
     </form>
-
-    <button id='btnCustomerList'class="btn btn-dark ">Customer List</button>
-
+    <label>
+        <button id='btnCustomerList'class="btn btn-dark ">Customer List</button>
+    </label>
     <form id='form_customer' action='/customer/save' method=POST>
         {% csrf_token %}
         <table id='CustomerList' class="table">
@@ -19,7 +19,6 @@
                     <th>Customer ID</th>
                     <th>Username</th>
                     <th>Email</th>
-
                     <th>Password</th>
 
                     <th></th>

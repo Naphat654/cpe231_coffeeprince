@@ -7,9 +7,9 @@
         <input type=text name='id_stock' value=''>
         <input type=submit value='GET'class="btn btn-dark ">
     </form>
-
-    <button id='btnStockList'class="btn btn-dark ">Stock List</button>
-
+    <label>
+        <button id='btnStockList'class="btn btn-dark ">Stock List</button>
+    </label>
     <form id='form_stock' action='/stock/save' method=POST>
         {% csrf_token %}
         <table id='StockList' class="table">

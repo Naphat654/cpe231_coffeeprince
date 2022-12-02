@@ -85,14 +85,23 @@ class StockDetail(View):
         response["Access-Control-Allow-Origin"] = "*"
         return response
 
-# class Sweet(models.Model):
-#     sweet_level = models.IntegerField(primary_key=True)
-#     description = models.CharField(max_length=100, null=True)
-#     class Meta:
-#         db_table = "sweet"
-#         managed = False
-#     def __str__(self):
-#         return self.sweet_level
+class IngredientList(View):
+    def get(self, request):
+        Ingredients = list(Ingredient.objects.all().values())
+        data = dict()
+        data['ingredient'] = Ingredients
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
+
+class IngredientDetail(View):
+    def get(self, request, pk):
+        Ingredient = get_object_or_404(Stock, pk=pk)
+        data = dict()
+        data['Ingredients'] = model_to_dict(Ingredient)
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
 
 #    *Sweet
 class SweetList(View):

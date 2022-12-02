@@ -19,9 +19,7 @@ from django.contrib.auth.decorators import login_required
 
 from report import views as report_views
 from order import views as order_views
-# from home import views as home_views
 from form import views as form_views
-# from login import views as login_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),

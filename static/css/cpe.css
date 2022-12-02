@@ -124,16 +124,16 @@ li a:hover {
     /* background-image: url("static/images/loco_cp.png"); */
     background-color: rgb(185, 162, 112) !important; }
 
-body .bg{
-  content: "";
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: -1;
-  filter: brightness(45%);
-  /* background-image: url('/static/images/coffee_blackground.jpg') !important; */
-  background-size: cover;
-  background-position: center;
-}
+  .bg-8{
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    position: absolute;
+    filter: brightness(100%);
+    background-color: rgb(255, 255, 255) !important;
+    background-size: cover;
+    background-position: center;
+  }

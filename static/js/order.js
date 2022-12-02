@@ -149,8 +149,8 @@ $('.search_product_code').click(function () {
                     <tr class="d-flex">
                         <td class='col-1'>${i++}</td>
                         <td class='col-3'><a class='a_click' href='#'>${additionalitem.type}</a></td>
-                        <td class='col-5'></td>
-                        <td class='col-3'></td>
+                        <td class='col-5'>${additionalitem.description}</td>
+                        <td class='col-3'>${additionalitem.mash}</td>
                         <td class='hide'></td>
                     </tr>`;
                 });
@@ -158,7 +158,7 @@ $('.search_product_code').click(function () {
 
                 $('#model_header_1').text('Type');
                 $('#model_header_2').text('Description');
-                $('#model_header_3').text('Note');
+                $('#model_header_3').text('Mash');
 
             },
         });        
@@ -250,7 +250,7 @@ $('.search_product_code').click(function () {
                     // return selected product detail (code,name,units) to table row
                     $(this).find('.menu_id_1 > span').html(code);
                     $(this).find('.menu_name').html(name);
-                    $(this).find('.price').html(note);   // default quantiy is '1'
+                    $(this).find('.unit_price').html(note);   // default quantiy is '1'
                 }
             });
             
@@ -525,8 +525,8 @@ $('.search_product_code').click(function () {
                     <tr class="d-flex">
                         <td class='col-1'>${i++}</td>
                         <td class='col-3'><a class='a_click' href='#'>${order.order_no}</a></td>
-                        <td class='col-5'>${order_date}</td>
-                        <td class='col-3'>${order.id_user_id}</td>
+                        <td class='col-5'>${order.date}</td>
+                        <td class='col-3'>${order.id_user}</td>
                         <td class='hide'>${order.payment_method_id}</td>
                         <td class='hide'></td>
                     </tr>`;
@@ -536,12 +536,14 @@ $('.search_product_code').click(function () {
                 $('#model_header_1').text('Order No');
                 $('#model_header_2').text('Order Date');
                 $('#model_header_3').text('Customer ID');
-
+                
+                
+                $('#txt_modal_param').val('order_no');
+                $('#modal_form').modal(); 
             },
         });        
         // open popup
-        $('#txt_modal_param').val('order_no');
-        $('#modal_form').modal();        
+               
     });
     $('#btnSave').click(function () {
 
